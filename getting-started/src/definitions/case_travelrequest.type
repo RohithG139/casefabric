@@ -1,0 +1,7 @@
+<type id="case_travelrequest.type" name="case_travelrequest">
+    <schema>
+        <property id="sp__qLOq6_0" name="TravelRequest" type="travelrequest.type" multiplicity="ExactlyOne"/>
+        <property id="sp__qLOq6_1" name="Approval" type="approval.type" multiplicity="ZeroOrOne"/>
+        <property id="sp__qLOq6_2" name="TravelStatus" type="travelstatus.type" multiplicity="ZeroOrOne"/>
+    </schema>
+</type>

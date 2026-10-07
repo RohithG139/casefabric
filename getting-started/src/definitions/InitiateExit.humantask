@@ -1,0 +1,64 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="InitiateExit" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__d38f5" name="name" typeRef="string"/>
+        <input id="employeeId__3db5f" name="employeeId" typeRef="string"/>
+        <input id="role__81a64" name="role" typeRef="string"/>
+        <input id="manager__e1588" name="manager" typeRef="string"/>
+        <output id="reason__6e8c1" name="reason" typeRef="string"/>
+        <output id="lastWorkingDay__c1ff1" name="lastWorkingDay" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Initiate exit &amp; notice",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "employeeId": {
+        "type": "string",
+        "title": "Employee ID",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "manager": {
+        "type": "string",
+        "title": "Manager",
+        "readOnly": true
+      },
+      "reason": {
+        "type": "string",
+        "title": "Exit reason"
+      },
+      "lastWorkingDay": {
+        "type": "string",
+        "title": "Last working day",
+        "format": "date"
+      }
+    },
+    "required": [
+      "reason",
+      "lastWorkingDay"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "employeeId",
+      "role",
+      "manager",
+      "reason",
+      "lastWorkingDay"
+    ],
+    "reason": {
+      "ui:widget": "textarea"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

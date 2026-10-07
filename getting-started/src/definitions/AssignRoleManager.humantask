@@ -1,0 +1,53 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="AssignRoleManager" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__44847" name="name" typeRef="string"/>
+        <input id="employeeId__7e0dc" name="employeeId" typeRef="string"/>
+        <input id="department__a6b37" name="department" typeRef="string"/>
+        <output id="role__069b7" name="role" typeRef="string"/>
+        <output id="manager__19d01" name="manager" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Assign role &amp; manager",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "employeeId": {
+        "type": "string",
+        "title": "Employee ID",
+        "readOnly": true
+      },
+      "department": {
+        "type": "string",
+        "title": "Department",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role"
+      },
+      "manager": {
+        "type": "string",
+        "title": "Manager"
+      }
+    },
+    "required": [
+      "role",
+      "manager"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "employeeId",
+      "department",
+      "role",
+      "manager"
+    ]
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

@@ -1,0 +1,36 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="CollectEmployeeDetails" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <output id="name__17a31" name="name" typeRef="string"/>
+        <output id="email__54df4" name="email" typeRef="string"/>
+        <output id="department__c6d5b" name="department" typeRef="string"/>
+        <output id="startDate__800a3" name="startDate" typeRef="date"/>
+        <task-model>{
+  "schema": {
+    "title": "Collect and verify employee details",
+    "type": "object",
+    "required": ["name", "email", "department", "startDate"],
+    "properties": {
+      "name": {
+        "title": "Full name",
+        "type": "string"
+      },
+      "email": {
+        "title": "Email",
+        "type": "string"
+      },
+     
+      "department": {
+        "title": "Department",
+        "type": "string"
+      },
+      "startDate": {
+        "title": "Start date",
+        "type": "string",
+        "format": "date"
+      }
+    }
+  },
+  "uiSchema": {}
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

@@ -1,0 +1,71 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="SendResponse" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <documentation textFormat="text/plain">
+            <text><![CDATA[Sends a response back to the initiator of the hello world case]]></text>
+        </documentation>
+        <input id="Greeting" name="Greeting"/>
+        <output id="Response" name="Response"/>
+        <task-model>{
+	"schema" : {
+		"title" : "You have received a greeting",
+		"type" : "object",
+		"required" : [
+			"Response"
+		],
+		"properties" : {
+			"Greeting" : {
+				"title" : " ",
+				"type" : "object",
+				"properties" : {
+					"Message" : {
+						"title" : "Greeting",
+						"type" : "string"
+					}
+				}
+			},
+			"Response" : {
+				"title" : "Your response",
+				"type" : "object",
+				"properties" : {
+					"Message" : {
+						"type" : "string",
+						"title" : "Your response message"
+					},
+					"Date" : {
+						"type" : "string",
+						"format" : "date",
+						"title" : "Pick a date"
+					},
+					"Time" : {
+						"type" : "string",
+						"format" : "time",
+						"title" : "Pick a time"
+					},
+					"SomeBoolean" : {
+						"type" : "boolean",
+						"title" : "Check this"
+					}
+				}
+			}
+		}
+	},
+	"uiSchema" : {
+       	"ui:order": [ "Greeting", "Response" ],
+		"Greeting" : {
+			"Message" : {
+				"ui:widget" : "textarea",
+				"ui:readonly" : true
+			},
+			"To" : {
+				"ui:readonly" : true
+			}
+		},
+		"Response" : {
+			"Message" : {
+				"ui:widget" : "textarea"
+			}
+		}
+	}
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

@@ -1,0 +1,18 @@
+<process xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne" name="ArchiveRecords" implementationType="http://www.omg.org/spec/CMMN/ProcessType/Unspecified">
+    <documentation textFormat="text/plain">
+        <text><![CDATA[HR system: archive the employee records]]></text>
+    </documentation>
+    <input id="employeeId__b29f0" name="employeeId" typeRef="string"/>
+    <input id="name__fec3a" name="name" typeRef="string"/>
+    <input id="reason__d1dbe" name="reason" typeRef="string"/>
+    <extensionElements mustUnderstand="false">
+        <cafienne:implementation class="org.cafienne.processtask.implementation.http.HTTPCallDefinition" async="true" xmlns:cafienne="org.cafienne">
+            <url xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">http://mock-api:8390/api/ArchiveRecords</url>
+            <method xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">POST</method>
+            <post-content xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">{"employeeId": "${employeeId}", "name": "${name}", "reason": "${reason}"}</post-content>
+            <http-headers xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">
+                <http-header name="Content-Type">application/json</http-header>
+            </http-headers>
+        </cafienne:implementation>
+    </extensionElements>
+</process>

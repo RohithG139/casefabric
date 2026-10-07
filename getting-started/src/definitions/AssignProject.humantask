@@ -1,0 +1,47 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="AssignProject" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__0e573" name="name" typeRef="string"/>
+        <input id="role__4c6e9" name="role" typeRef="string"/>
+        <output id="projectId__c6425" name="projectId" typeRef="string"/>
+        <output id="accepted__f9f2c" name="accepted" typeRef="boolean"/>
+        <task-model>{
+  "schema": {
+    "title": "Assign project",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "projectId": {
+        "type": "string",
+        "title": "Project ID"
+      },
+      "accepted": {
+        "type": "boolean",
+        "title": "Assignment accepted",
+        "default": false
+      }
+    },
+    "required": [
+      "projectId",
+      "accepted"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "role",
+      "projectId",
+      "accepted"
+    ]
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

@@ -1,0 +1,95 @@
+<case xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne" id="helloworld.case" name="HelloWorld" expressionLanguage="spel" guid="_nTPPc">
+    <documentation textFormat="text/plain">
+        <text><![CDATA[Hello World]]></text>
+    </documentation>
+    <caseFileModel typeRef="helloworld.type"/>
+    <casePlanModel id="cm_HelloWorld.case_HelloWorld_0" name="HelloWorld" autoComplete="true">
+        <humanTask id="cm_csVQy_167" name="Receive Greeting and Send response" isBlocking="true" performerRef="_nTPPc_20">
+            <documentation textFormat="text/plain">
+                <text><![CDATA[Receive Greeting and Send response]]></text>
+            </documentation>
+            <inputs id="inTP_cm_cs2F1_174_1" name="Greeting" bindingRef="Greeting"/>
+            <outputs id="outTP_cm_cs2F1_174_1" name="Response" bindingRef="Response"/>
+            <extensionElements mustUnderstand="false">
+                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="sendresponse.humantask">
+                    <parameterMapping id="inPM_cm_cshJq_4_0" sourceRef="inTP_cm_cs2F1_174_1" targetRef="Greeting"/>
+                    <parameterMapping id="outPM_cm_csuYs_174_0" sourceRef="Response" targetRef="outTP_cm_cs2F1_174_1"/>
+                    <assignment id="_nTPPc_3" contextRef="Greeting">
+                        <condition id="_nTPPc_4">
+                            <body><![CDATA[Greeting.To]]></body>
+                        </condition>
+                    </assignment>
+                    <duedate id="_nTPPc_9">
+                        <condition id="_nTPPc_10">
+                            <body><![CDATA[T(java.time.Instant).now()]]></body>
+                        </condition>
+                    </duedate>
+                </cafienne:implementation>
+            </extensionElements>
+        </humanTask>
+        <humanTask id="cm_cs3hg_196" name="Read response" isBlocking="true" performerRef="role_csT3f_0">
+            <entryCriterion id="_nTPPc_0" name="EntryCriterion_0">
+                <planItemOnPart id="ref_id_cm_csVQy_167" sourceRef="cm_csVQy_167">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </entryCriterion>
+            <inputs id="inTP_cm_cs3hg_196_0" name="Response" bindingRef="Response"/>
+            <extensionElements mustUnderstand="false">
+                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="readresponse.humantask">
+                    <parameterMapping id="inPM_cm_cs3hg_196_0" sourceRef="inTP_cm_cs3hg_196_0" targetRef="Response"/>
+                    <assignment id="_nTPPc_12" contextRef="Greeting">
+                        <condition id="_nTPPc_13">
+                            <body><![CDATA[Greeting.From]]></body>
+                        </condition>
+                    </assignment>
+                    <duedate id="_nTPPc_14">
+                        <condition id="_nTPPc_15">
+                            <body><![CDATA[T(java.time.Instant).now()]]></body>
+                        </condition>
+                    </duedate>
+                </cafienne:implementation>
+            </extensionElements>
+        </humanTask>
+    </casePlanModel>
+    <caseRoles caseTeamRef="world.caseteam"/>
+    <input id="csVQy_inCPs_0" name="Greeting" bindingRef="Greeting"/>
+    <extensionElements mustUnderstand="false">
+        <cafienne:start-case-model xmlns:cafienne="org.cafienne">{
+  "schema": {
+    "title": "Greeting",
+    "type": "object",
+    "required": [
+      "Greeting"
+    ],
+    "properties": {
+      "Greeting": {
+        "title": "Your greeting to the World",
+        "type": "object",
+        "properties": {
+          "Message": {
+            "type": "string",
+            "title": "Your message"
+          },
+          "To": {
+            "type": "string",
+            "title": "To whom?"
+          },
+          "From": {
+            "type": "string",
+            "title": "From",
+            "default": "$CURRENT_USER"
+          }
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "Greeting": {
+      "Message": {"ui:widget": "textarea"},
+      "To" :  {"ui:widget": "user-selector", "multiSelect" : false, "role" : "Receiver"},
+      "From" :  {"ui:widget": "user-selector", "multiSelect" : false, "role" : "Sender"}
+    }
+  }
+}</cafienne:start-case-model>
+    </extensionElements>
+</case>

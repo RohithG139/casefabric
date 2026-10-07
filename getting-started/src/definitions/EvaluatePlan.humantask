@@ -1,0 +1,51 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="EvaluatePlan" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="goals__55b0e" name="goals" typeRef="string"/>
+        <input id="progress__02a16" name="progress" typeRef="string"/>
+        <output id="furtherNeeds__6ada2" name="furtherNeeds" typeRef="boolean"/>
+        <task-model>{
+  "schema": {
+    "title": "Evaluate &amp; document results",
+    "type": "object",
+    "properties": {
+      "goals": {
+        "type": "string",
+        "title": "Development goals",
+        "readOnly": true
+      },
+      "progress": {
+        "type": "string",
+        "title": "Progress",
+        "enum": [
+          "onTrack",
+          "behind",
+          "done"
+        ],
+        "readOnly": true
+      },
+      "furtherNeeds": {
+        "type": "boolean",
+        "title": "Further development needed",
+        "default": false
+      }
+    },
+    "required": [
+      "furtherNeeds"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "goals",
+      "progress",
+      "furtherNeeds"
+    ],
+    "goals": {
+      "ui:widget": "textarea"
+    },
+    "progress": {
+      "ui:widget": "radio"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

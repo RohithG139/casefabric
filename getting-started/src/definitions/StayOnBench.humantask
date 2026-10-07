@@ -1,0 +1,37 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="StayOnBench" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__09a41" name="name" typeRef="string"/>
+        <input id="role__23391" name="role" typeRef="string"/>
+        <output id="skillGap__87397" name="skillGap" typeRef="boolean"/>
+        <task-model>{
+  "schema": {
+    "title": "Stay on bench",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "skillGap": {
+        "type": "boolean",
+        "title": "Skill gap identified",
+        "default": false
+      }
+    }
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "role",
+      "skillGap"
+    ]
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

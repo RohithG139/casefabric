@@ -1,0 +1,47 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="CheckProjectStatus" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__8173e" name="name" typeRef="string"/>
+        <input id="role__44a62" name="role" typeRef="string"/>
+        <input id="department__ec182" name="department" typeRef="string"/>
+        <output id="projectAvailable__3d3dc" name="projectAvailable" typeRef="boolean"/>
+        <task-model>{
+  "schema": {
+    "title": "Check project status",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "department": {
+        "type": "string",
+        "title": "Department",
+        "readOnly": true
+      },
+      "projectAvailable": {
+        "type": "boolean",
+        "title": "Project available",
+        "default": false
+      }
+    },
+    "required": [
+      "projectAvailable"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "role",
+      "department",
+      "projectAvailable"
+    ]
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

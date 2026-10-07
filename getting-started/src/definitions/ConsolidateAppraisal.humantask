@@ -1,0 +1,76 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="ConsolidateAppraisal" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__5cd61" name="name" typeRef="string"/>
+        <input id="selfScore__b7f05" name="selfScore" typeRef="integer"/>
+        <input id="managerScore__61a66" name="managerScore" typeRef="integer"/>
+        <input id="clientScore__f30a8" name="clientScore" typeRef="integer"/>
+        <output id="finalScore__da711" name="finalScore" typeRef="integer"/>
+        <output id="outcome__a755b" name="outcome" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Consolidate &amp; finalize",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "selfScore": {
+        "type": "integer",
+        "title": "Self score",
+        "minimum": 1,
+        "maximum": 5,
+        "readOnly": true
+      },
+      "managerScore": {
+        "type": "integer",
+        "title": "Manager score",
+        "minimum": 1,
+        "maximum": 5,
+        "readOnly": true
+      },
+      "clientScore": {
+        "type": "integer",
+        "title": "Client score",
+        "minimum": 1,
+        "maximum": 5,
+        "readOnly": true
+      },
+      "finalScore": {
+        "type": "integer",
+        "title": "Final score",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "outcome": {
+        "type": "string",
+        "title": "Appraisal outcome",
+        "enum": [
+          "promoted",
+          "meets",
+          "poor"
+        ]
+      }
+    },
+    "required": [
+      "finalScore",
+      "outcome"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "selfScore",
+      "managerScore",
+      "clientScore",
+      "finalScore",
+      "outcome"
+    ],
+    "outcome": {
+      "ui:widget": "radio"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

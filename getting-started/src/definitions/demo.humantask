@@ -1,0 +1,22 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="demo" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <documentation textFormat="text/plain">
+            <text><![CDATA[ddd]]></text>
+        </documentation>
+        <input id="name__3J8B" name="name" typeRef="string"/>
+        <input id="age__LCPv" name="age" typeRef="date"/>
+        <task-model>{
+  "schema": {
+    "title": "ddd",
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "name",
+        "$ref": "#/definitions/s"
+      }
+    },
+    "definitions": {}
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

@@ -1,0 +1,41 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="SelfReview" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__de3e4" name="name" typeRef="string"/>
+        <input id="role__1bb2c" name="role" typeRef="string"/>
+        <output id="selfScore__433f9" name="selfScore" typeRef="integer"/>
+        <task-model>{
+  "schema": {
+    "title": "Self review",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "selfScore": {
+        "type": "integer",
+        "title": "Self score",
+        "minimum": 1,
+        "maximum": 5
+      }
+    },
+    "required": [
+      "selfScore"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "role",
+      "selfScore"
+    ]
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

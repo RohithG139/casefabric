@@ -1,0 +1,62 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="ApprovePlan" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__651c3" name="name" typeRef="string"/>
+        <input id="goals__02ebb" name="goals" typeRef="string"/>
+        <input id="activities__d9954" name="activities" typeRef="string"/>
+        <output id="approved__1fed1" name="approved" typeRef="boolean"/>
+        <task-model>{
+  "schema": {
+    "title": "Approve plan",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "goals": {
+        "type": "string",
+        "title": "Development goals",
+        "readOnly": true
+      },
+      "activities": {
+        "type": "array",
+        "title": "Activities",
+        "items": {
+          "type": "string",
+          "enum": [
+            "projects",
+            "training",
+            "coaching"
+          ]
+        },
+        "readOnly": true,
+        "uniqueItems": true
+      },
+      "approved": {
+        "type": "boolean",
+        "title": "Plan approved",
+        "default": false
+      }
+    },
+    "required": [
+      "approved"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "goals",
+      "activities",
+      "approved"
+    ],
+    "goals": {
+      "ui:widget": "textarea"
+    },
+    "activities": {
+      "ui:widget": "checkboxes"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

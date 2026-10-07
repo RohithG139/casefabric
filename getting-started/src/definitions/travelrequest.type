@@ -1,0 +1,10 @@
+<type id="travelrequest.type" name="travelrequest">
+    <schema>
+        <property id="sp__ufvEv_0" name="TravelDetails" type="traveldetails.type" multiplicity="ExactlyOne"/>
+        <property id="sp__ufvEv_1" name="TravellerDetails" type="travellerdetails.type" multiplicity="ExactlyOne"/>
+        <property id="sp__ufvEv_2" name="TravelOrderDoc" type="travelorderdoc.type" multiplicity="ExactlyOne"/>
+        <property id="sp__ufvEv_3" name="Meeting" type="meeting.type" multiplicity="ExactlyOne"/>
+        <property id="sp__ufvEv_4" name="Transport" type="transport.type" multiplicity="ExactlyOne"/>
+        <property id="sp__ufvEv_5" name="Project" type="project.type" multiplicity="ExactlyOne"/>
+    </schema>
+</type>

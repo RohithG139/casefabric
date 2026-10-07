@@ -1,0 +1,182 @@
+# This compose will work with docker 1.13.1+
+#
+# To run, call:
+#   $ docker-compose up
+#
+services:
+  # supporting containers
+  mailcatcher:
+    image: schickling/mailcatcher:latest
+    labels:
+      component: mta
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://mailcatcher:1080"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    networks:
+      - getting_started_network
+    expose:
+      - 1025
+      - 1080
+    ports:
+      - "1080:1080"
+    hostname: mailcatcher
+    container_name: mailcatcher
+
+  # Mock HR / identity / mail APIs called by the process tasks of the emp case
+  mock-api:
+    image: node:22-alpine
+    command: ["node", "/app/server.js"]
+    labels:
+      component: mock-api
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8390/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    networks:
+      - getting_started_network
+    expose:
+      - 8390
+    ports:
+      - "8390:8390"
+    hostname: mock-api
+    container_name: mock-api
+    volumes:
+      - ./src/mock-api:/app:ro
+
+  idp:
+    image: quay.io/dexidp/dex:v2.23.0
+    command: ["serve", "/dex-setup.yaml"]
+    networks:
+      - getting_started_network
+    expose:
+      - 5556
+      - 5558
+    ports:
+      - "5556:5556"
+      - "5558:5558"
+    hostname: idp
+    container_name: idp
+    volumes:
+      - ./src/dex/conf/dex-setup.yaml:/dex-setup.yaml
+      - ./src/dex/web/:/web/
+      - ./run/dex/:/var/dex/
+
+  case-engine-db-postgres:
+    image: postgres:16
+    networks:
+      - getting_started_network
+    expose:
+      - 5432
+    ports:
+      - "5431:5432"
+    hostname: case-engine-db-postgres
+    container_name: case-engine-db-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./src/postgres-initdb:/docker-entrypoint-initdb.d
+      - case-engine-db-data:/var/lib/postgresql/data
+
+  case-designer:
+    image: cafienne/ide:latest
+    labels: 
+      component: case-designer
+    networks:
+      - getting_started_network
+    expose:
+      - 2081
+    ports:
+      - "2081:2081"
+    hostname: ide
+    container_name: case-designer
+    volumes:
+      - ./target/definitions:/usr/src/app/repository_deploy
+      - ./src/definitions:/usr/src/app/repository   
+    depends_on:
+      - case-engine
+
+  case-user-interface:
+    image: cafienne/cafienne-ui:0.7.3
+    labels:
+      component: case-user-interface
+    networks:
+      - getting_started_network
+    ports:
+      - "3317:80"
+    expose:
+      - 3317
+    hostname: case-user-interface
+    container_name: case-user-interface
+    environment:
+      OIDC_URI: ${OIDC_URI:-http://localhost:5556/dex}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-case-user-interface}
+      CAFIENNE_URI: ${CAFIENNE_URI:-http://localhost:2027}
+    depends_on:
+      - case-engine
+      - idp
+
+  case-engine-proxy:
+    image: nginx:1.27-alpine
+    labels:
+      component: case-engine-proxy
+    networks:
+      - getting_started_network
+    ports:
+      - "2027:2027"
+    hostname: case-engine-proxy
+    container_name: case-engine-proxy
+    volumes:
+      - ./src/nginx/case-engine-proxy.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - case-engine
+
+  case-engine:
+    image: cafienne/engine:1.1.35
+    labels:
+      component: case-engine
+    networks:
+      - getting_started_network
+    expose:
+      - 2027
+    hostname: case-engine
+    container_name: case-engine
+    healthcheck:
+      test: ["CMD", "curl", "-sS", "-o", "/dev/null", "http://case-engine:2027/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    environment:
+      EVENT_DB_URL: ${EVENT_DB_URL:-jdbc:postgresql://case-engine-db-postgres:5432/case-engine-eventstore?reWriteBatchedInserts=true}    
+      EVENT_DB_PROFILE: ${EVENT_DB_PROFILE:-slick.jdbc.PostgresProfile$}
+      EVENT_DB_DRIVER: ${EVENT_DB_DRIVER:-org.postgresql.Driver}
+      EVENT_DB_USER: ${EVENT_DB_USER:-postgres}
+      EVENT_DB_PASSWORD: ${EVENT_DB_PASSWORD:-postgres}
+      QUERY_DB_PROFILE: ${QUERY_DB_PROFILE:-slick.jdbc.PostgresProfile$}
+      QUERY_DB_DRIVER: ${QUERY_DB_DRIVER:-org.postgresql.Driver}
+      QUERY_DB_USER: ${QUERY_DB_USER:-postgres}
+      QUERY_DB_PASSWORD: ${QUERY_DB_PASSWORD:-postgres}
+      QUERY_DB_URL: ${QUERY_DB_URL:-jdbc:postgresql://case-engine-db-postgres:5432/case-engine-query?reWriteBatchedInserts=true}
+    volumes:
+      - ./run/cafienne/journal:/opt/cafienne/journal
+      - ./run/cafienne/logs:/opt/cafienne/logs
+      - ./target/definitions:/opt/cafienne/definitions
+      - ./src/conf:/opt/cafienne/conf
+      - ./src/ext:/opt/cafienne/lib_ext
+      - ./src/bootstrap:/opt/cafienne/bootstrap
+    depends_on:
+      - case-engine-db-postgres
+      - idp
+      - mailcatcher
+
+volumes:
+  case-engine-db-data:
+    driver: local
+  dex:
+    driver: local
+networks:
+  getting_started_network:
+    driver: bridge

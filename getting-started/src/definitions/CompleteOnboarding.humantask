@@ -1,0 +1,57 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="CompleteOnboarding" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__5e0ba" name="name" typeRef="string"/>
+        <input id="role__ee875" name="role" typeRef="string"/>
+        <input id="manager__c6380" name="manager" typeRef="string"/>
+        <input id="openItems__4fce4" name="openItems" typeRef="string"/>
+        <output id="onboardingComplete__dd13c" name="onboardingComplete" typeRef="boolean"/>
+        <output id="openItems__d00ca" name="openItems" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Complete onboarding process",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "manager": {
+        "type": "string",
+        "title": "Manager",
+        "readOnly": true
+      },
+      "openItems": {
+        "type": "string",
+        "title": "Open items"
+      },
+      "onboardingComplete": {
+        "type": "boolean",
+        "title": "Onboarding complete",
+        "default": false
+      }
+    },
+    "required": [
+      "onboardingComplete"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "role",
+      "manager",
+      "openItems",
+      "onboardingComplete"
+    ],
+    "openItems": {
+      "ui:widget": "textarea"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

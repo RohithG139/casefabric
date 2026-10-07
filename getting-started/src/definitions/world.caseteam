@@ -1,0 +1,11 @@
+<caseteam xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne" id="world.caseteam" name="world">
+    <documentation textFormat="text/plain">
+        <text><![CDATA[World team]]></text>
+    </documentation>
+    <role id="role_csT3f_0" name="Greeter">
+        <documentation textFormat="text/plain">
+            <text><![CDATA[admin of the case]]></text>
+        </documentation>
+    </role>
+    <role id="_nTPPc_20" name="Responder"/>
+</caseteam>

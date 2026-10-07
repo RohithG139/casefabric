@@ -1,0 +1,10 @@
+<type id="traveller.type" name="traveller">
+    <schema>
+        <property id="sp__qOm5w_0" name="Name" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__qOm5w_1" name="Email" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__qOm5w_2" name="Nationality" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__qOm5w_3" name="PassNo" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__qOm5w_4" name="isVisaDocumentsAvailable" type="boolean" multiplicity="ExactlyOne"/>
+        <property id="sp__qOm5w_5" name="isESTAApplicationSubmitted" type="boolean" multiplicity="ExactlyOne"/>
+    </schema>
+</type>

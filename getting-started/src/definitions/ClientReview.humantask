@@ -1,0 +1,41 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="ClientReview" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__d4831" name="name" typeRef="string"/>
+        <input id="projectId__c45d9" name="projectId" typeRef="string"/>
+        <output id="clientScore__7c3ba" name="clientScore" typeRef="integer"/>
+        <task-model>{
+  "schema": {
+    "title": "Client review",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "projectId": {
+        "type": "string",
+        "title": "Project ID",
+        "readOnly": true
+      },
+      "clientScore": {
+        "type": "integer",
+        "title": "Client score",
+        "minimum": 1,
+        "maximum": 5
+      }
+    },
+    "required": [
+      "clientScore"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "projectId",
+      "clientScore"
+    ]
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

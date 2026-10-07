@@ -1,0 +1,39 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="CheckInReview" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="goals__a3e14" name="goals" typeRef="string"/>
+        <input id="status__58233" name="status" typeRef="string"/>
+        <output id="status__b8914" name="status" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Check-in review",
+    "type": "object",
+    "properties": {
+      "goals": {
+        "type": "string",
+        "title": "PIP goals",
+        "readOnly": true
+      },
+      "status": {
+        "type": "string",
+        "title": "Check-in notes / progress update"
+      }
+    },
+    "required": [
+      "status"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "goals",
+      "status"
+    ],
+    "goals": {
+      "ui:widget": "textarea"
+    },
+    "status": {
+      "ui:widget": "textarea"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

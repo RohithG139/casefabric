@@ -1,0 +1,59 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="PlanActivity" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="goals__f0aaa" name="goals" typeRef="string"/>
+        <input id="activities__285bd" name="activities" typeRef="string"/>
+        <output id="progress__76a97" name="progress" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Development activity",
+    "type": "object",
+    "properties": {
+      "goals": {
+        "type": "string",
+        "title": "Development goals",
+        "readOnly": true
+      },
+      "activities": {
+        "type": "array",
+        "title": "Activities",
+        "items": {
+          "type": "string",
+          "enum": [
+            "projects",
+            "training",
+            "coaching"
+          ]
+        },
+        "readOnly": true,
+        "uniqueItems": true
+      },
+      "progress": {
+        "type": "string",
+        "title": "Progress",
+        "enum": [
+          "onTrack",
+          "behind",
+          "done"
+        ]
+      }
+    }
+  },
+  "uiSchema": {
+    "ui:order": [
+      "goals",
+      "activities",
+      "progress"
+    ],
+    "goals": {
+      "ui:widget": "textarea"
+    },
+    "progress": {
+      "ui:widget": "radio"
+    },
+    "activities": {
+      "ui:widget": "checkboxes"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

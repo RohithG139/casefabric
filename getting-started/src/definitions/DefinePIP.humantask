@@ -1,0 +1,81 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="DefinePIP" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__ec315" name="name" typeRef="string"/>
+        <input id="email__6f9dc" name="email" typeRef="string"/>
+        <input id="outcome__cf399" name="outcome" typeRef="string"/>
+        <input id="reviewOutcome__83af1" name="reviewOutcome" typeRef="string"/>
+        <output id="goals__b2c37" name="goals" typeRef="string"/>
+        <output id="employeeEmail__d2633" name="employeeEmail" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Define PIP goals",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "email": {
+        "type": "string",
+        "title": "Email",
+        "format": "email",
+        "readOnly": true
+      },
+      "outcome": {
+        "type": "string",
+        "title": "Appraisal outcome",
+        "enum": [
+          "promoted",
+          "meets",
+          "poor"
+        ],
+        "readOnly": true
+      },
+      "reviewOutcome": {
+        "type": "string",
+        "title": "Review outcome",
+        "enum": [
+          "continue",
+          "nextProject",
+          "poorPerformance"
+        ],
+        "readOnly": true
+      },
+      "goals": {
+        "type": "string",
+        "title": "PIP goals"
+      },
+      "employeeEmail": {
+        "type": "string",
+        "title": "Employee email",
+        "format": "email"
+      }
+    },
+    "required": [
+      "goals",
+      "employeeEmail"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "email",
+      "outcome",
+      "reviewOutcome",
+      "goals",
+      "employeeEmail"
+    ],
+    "outcome": {
+      "ui:widget": "radio"
+    },
+    "reviewOutcome": {
+      "ui:widget": "radio"
+    },
+    "goals": {
+      "ui:widget": "textarea"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

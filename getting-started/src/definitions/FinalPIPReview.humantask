@@ -1,0 +1,60 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="FinalPIPReview" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__f1ca4" name="name" typeRef="string"/>
+        <input id="goals__80c61" name="goals" typeRef="string"/>
+        <input id="status__4e149" name="status" typeRef="string"/>
+        <output id="result__294c8" name="result" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Final PIP review",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "goals": {
+        "type": "string",
+        "title": "PIP goals",
+        "readOnly": true
+      },
+      "status": {
+        "type": "string",
+        "title": "Latest progress update",
+        "readOnly": true
+      },
+      "result": {
+        "type": "string",
+        "title": "PIP result (extend = one extra 30 days)",
+        "enum": [
+          "passed",
+          "notMet",
+          "extend"
+        ]
+      }
+    },
+    "required": [
+      "result"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "goals",
+      "status",
+      "result"
+    ],
+    "goals": {
+      "ui:widget": "textarea"
+    },
+    "result": {
+      "ui:widget": "radio"
+    },
+    "status": {
+      "ui:widget": "textarea"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

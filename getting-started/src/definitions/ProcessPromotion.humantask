@@ -1,0 +1,49 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="ProcessPromotion" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__a5c00" name="name" typeRef="string"/>
+        <input id="role__27388" name="currentRole" typeRef="string"/>
+        <input id="finalScore__bc069" name="finalScore" typeRef="integer"/>
+        <output id="role__0b2e3" name="newRole" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Process promotion",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "currentRole": {
+        "type": "string",
+        "title": "Current role",
+        "readOnly": true
+      },
+      "newRole": {
+        "type": "string",
+        "title": "New role (after promotion)",
+        "minLength": 1
+      },
+      "finalScore": {
+        "type": "integer",
+        "title": "Final score",
+        "minimum": 1,
+        "maximum": 5,
+        "readOnly": true
+      }
+    },
+    "required": [
+      "newRole"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "currentRole",
+      "newRole",
+      "finalScore"
+    ]
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

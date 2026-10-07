@@ -1,0 +1,41 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="ManagerReview" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__2f750" name="name" typeRef="string"/>
+        <input id="role__6a726" name="role" typeRef="string"/>
+        <output id="managerScore__f6590" name="managerScore" typeRef="integer"/>
+        <task-model>{
+  "schema": {
+    "title": "Manager review",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "managerScore": {
+        "type": "integer",
+        "title": "Manager score",
+        "minimum": 1,
+        "maximum": 5
+      }
+    },
+    "required": [
+      "managerScore"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "role",
+      "managerScore"
+    ]
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

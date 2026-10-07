@@ -1,0 +1,7 @@
+<type id="transport.type" name="transport">
+    <schema>
+        <property id="sp__RvoXm_0" name="ModeOfTransport" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__RvoXm_1" name="POMVMake" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__RvoXm_2" name="POMVLicense" type="string" multiplicity="ExactlyOne"/>
+    </schema>
+</type>

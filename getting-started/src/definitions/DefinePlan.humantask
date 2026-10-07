@@ -1,0 +1,67 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="DefinePlan" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__0ed4b" name="name" typeRef="string"/>
+        <input id="role__85fca" name="role" typeRef="string"/>
+        <input id="skillGap__87372" name="skillGap" typeRef="boolean"/>
+        <output id="goals__2f81d" name="goals" typeRef="string"/>
+        <output id="activities__e2ee3" name="activities" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Define goals &amp; plan",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "skillGap": {
+        "type": "boolean",
+        "title": "Skill gap identified",
+        "readOnly": true
+      },
+      "goals": {
+        "type": "string",
+        "title": "Development goals"
+      },
+      "activities": {
+        "type": "array",
+        "title": "Activities",
+        "items": {
+          "type": "string",
+          "enum": [
+            "projects",
+            "training",
+            "coaching"
+          ]
+        },
+        "uniqueItems": true
+      }
+    },
+    "required": [
+      "goals"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "role",
+      "skillGap",
+      "goals",
+      "activities"
+    ],
+    "goals": {
+      "ui:widget": "textarea"
+    },
+    "activities": {
+      "ui:widget": "checkboxes"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

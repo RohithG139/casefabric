@@ -1,0 +1,7 @@
+<type id="travelstatus.type" name="travelstatus">
+    <schema>
+        <property id="sp__kkokw_0" name="ApproverAvailable" type="boolean" multiplicity="ExactlyOne"/>
+        <property id="sp__kkokw_1" name="POAvailable" type="boolean" multiplicity="ExactlyOne"/>
+        <property id="sp__kkokw_2" name="Approver" type="string" multiplicity="ExactlyOne"/>
+    </schema>
+</type>

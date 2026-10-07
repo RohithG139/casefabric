@@ -1,0 +1,8 @@
+<type id="approval.type" name="approval">
+    <schema>
+        <property id="sp__h1zfA_0" name="Status" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__h1zfA_1" name="ApprovedBy" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__h1zfA_2" name="ApprovalTimestamp" type="string" multiplicity="ExactlyOne" format="date-time"/>
+        <property id="sp__h1zfA_3" name="Motivation" type="string" multiplicity="ExactlyOne"/>
+    </schema>
+</type>

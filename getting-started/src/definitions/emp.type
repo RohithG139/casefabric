@@ -1,0 +1,70 @@
+<type xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne" id="emp.type" name="emp">
+    <schema>
+        <property id="sp_Employee" name="Employee" type="object" multiplicity="ExactlyOne">
+            <schema id="sc_Employee" name="Employee">
+                <property id="sp_Employee_name" name="name" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_Employee_email" name="email" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_Employee_employeeId" name="employeeId" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_Employee_department" name="department" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_Employee_role" name="role" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_Employee_manager" name="manager" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_Employee_startDate" name="startDate" type="string" multiplicity="ExactlyOne"/>
+            </schema>
+        </property>
+        <property id="sp_Onboarding" name="Onboarding" type="object" multiplicity="ExactlyOne">
+            <schema id="sc_Onboarding" name="Onboarding">
+                <property id="sp_Onboarding_onboardingComplete" name="onboardingComplete" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_Onboarding_openItems" name="openItems" type="string" multiplicity="ExactlyOne"/>
+            </schema>
+        </property>
+        <property id="sp_ProjectAssignment" name="ProjectAssignment" type="object" multiplicity="ZeroOrOne">
+            <schema id="sc_ProjectAssignment" name="ProjectAssignment">
+                <property id="sp_ProjectAssignment_projectAvailable" name="projectAvailable" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_ProjectAssignment_projectId" name="projectId" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_ProjectAssignment_onProject" name="onProject" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_ProjectAssignment_skillGap" name="skillGap" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_ProjectAssignment_accepted" name="accepted" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_ProjectAssignment_reviewOutcome" name="reviewOutcome" type="string" multiplicity="ExactlyOne"/>
+            </schema>
+        </property>
+        <property id="sp_DevelopmentPlan" name="DevelopmentPlan" type="object" multiplicity="ZeroOrOne">
+            <schema id="sc_DevelopmentPlan" name="DevelopmentPlan">
+                <property id="sp_DevelopmentPlan_status" name="status" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_DevelopmentPlan_goals" name="goals" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_DevelopmentPlan_activities" name="activities" type="Unspecified" multiplicity="ZeroOrMore"/>
+                <property id="sp_DevelopmentPlan_approved" name="approved" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_DevelopmentPlan_progress" name="progress" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_DevelopmentPlan_furtherNeeds" name="furtherNeeds" type="boolean" multiplicity="ExactlyOne"/>
+            </schema>
+        </property>
+        <property id="sp_Appraisal" name="Appraisal" type="object" multiplicity="ZeroOrOne">
+            <schema id="sc_Appraisal" name="Appraisal">
+                <property id="sp_Appraisal_selfScore" name="selfScore" type="integer" multiplicity="ExactlyOne"/>
+                <property id="sp_Appraisal_managerScore" name="managerScore" type="integer" multiplicity="ExactlyOne"/>
+                <property id="sp_Appraisal_clientScore" name="clientScore" type="integer" multiplicity="ExactlyOne"/>
+                <property id="sp_Appraisal_finalScore" name="finalScore" type="integer" multiplicity="ExactlyOne"/>
+                <property id="sp_Appraisal_outcome" name="outcome" type="string" multiplicity="ExactlyOne"/>
+            </schema>
+        </property>
+        <property id="sp_PIP" name="PIP" type="object" multiplicity="ZeroOrOne">
+            <schema id="sc_PIP" name="PIP">
+                <property id="sp_PIP_status" name="status" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_progress" name="progress" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_employeeEmail" name="employeeEmail" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_goals" name="goals" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_noticeText" name="noticeText" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_hrApproved" name="hrApproved" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_acknowledged" name="acknowledged" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_disputeOutcome" name="disputeOutcome" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_result" name="result" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_PIP_extended" name="extended" type="boolean" multiplicity="ExactlyOne"/>
+            </schema>
+        </property>
+        <property id="sp_Exit" name="Exit" type="object" multiplicity="ZeroOrOne">
+            <schema id="sc_Exit" name="Exit">
+                <property id="sp_Exit_reason" name="reason" type="string" multiplicity="ExactlyOne"/>
+                <property id="sp_Exit_lastWorkingDay" name="lastWorkingDay" type="string" multiplicity="ExactlyOne"/>
+            </schema>
+        </property>
+    </schema>
+</type>

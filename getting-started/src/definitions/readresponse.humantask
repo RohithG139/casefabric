@@ -1,0 +1,50 @@
+<humantask>
+    <cafienne:implementation name="ReadResponse" xmlns:cafienne="org.cafienne" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <documentation textFormat="text/plain">
+            <text>
+                <![CDATA[Read Response]]>
+            </text>
+        </documentation>
+        <input id="Response" name="Response"/>
+        <output id="_MZBR_Greeting" name="Greeting"/>
+        <task-model>
+			{
+				"schema": {
+					"title": "Read response",
+					"type": "object",
+					"properties": {
+						"Response": {
+							"title": "Your response",
+							"type": "object",
+							"properties": {
+								"Message": {
+									"type": "string",
+									"title": "Your response message"
+								},
+								"Date": {
+									"type": "string",
+									"format": "date",
+									"title": "Pick a date"
+								},
+								"Time": {
+									"type": "string",
+									"format": "time",
+									"title": "Pick a time"
+								},
+								"SomeBoolean": {
+									"type": "boolean",
+									"title": "Check this"
+								}
+							}
+						}
+					}
+				},
+				"uiSchema": {
+					"Message": {
+						"ui:widget": "textarea"
+					}
+				}
+			}
+		</task-model>
+    </cafienne:implementation>
+</humantask>

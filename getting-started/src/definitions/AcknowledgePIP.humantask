@@ -1,0 +1,59 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="AcknowledgePIP" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="goals__f2535" name="goals" typeRef="string"/>
+        <input id="noticeText__f39fd" name="noticeText" typeRef="string"/>
+        <input id="disputeOutcome__ac3d1" name="disputeOutcome" typeRef="string"/>
+        <output id="acknowledged__39233" name="acknowledged" typeRef="boolean"/>
+        <task-model>{
+  "schema": {
+    "title": "Acknowledge PIP",
+    "type": "object",
+    "properties": {
+      "goals": {
+        "type": "string",
+        "title": "PIP goals",
+        "readOnly": true
+      },
+      "noticeText": {
+        "type": "string",
+        "title": "PIP notice",
+        "readOnly": true
+      },
+      "disputeOutcome": {
+        "type": "string",
+        "title": "HR response to your dispute",
+        "readOnly": true
+      },
+      "acknowledged": {
+        "type": "boolean",
+        "title": "I acknowledge the PIP (choose No to dispute it)",
+        "default": false
+      }
+    },
+    "required": [
+      "acknowledged"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "goals",
+      "noticeText",
+      "disputeOutcome",
+      "acknowledged"
+    ],
+    "goals": {
+      "ui:widget": "textarea"
+    },
+    "noticeText": {
+      "ui:widget": "textarea"
+    },
+    "disputeOutcome": {
+      "ui:widget": "textarea"
+    },
+    "acknowledged": {
+      "ui:widget": "radio"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

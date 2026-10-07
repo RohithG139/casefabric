@@ -1,0 +1,21 @@
+<process xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne" name="CreateEmployeeRecord" implementationType="http://www.omg.org/spec/CMMN/ProcessType/Unspecified">
+    <documentation textFormat="text/plain">
+        <text><![CDATA[HR system: create the employee record]]></text>
+    </documentation>
+    <input id="name__b5bd4" name="name" typeRef="string"/>
+    <input id="email__d03af" name="email" typeRef="string"/>
+    <input id="department__2f6d7" name="department" typeRef="string"/>
+    <input id="startDate__6702e" name="startDate" typeRef="string"/>
+    <output id="employeeId__c1907" name="employeeId" typeRef="string"/>
+    <extensionElements mustUnderstand="false">
+        <cafienne:implementation class="org.cafienne.processtask.implementation.http.HTTPCallDefinition" async="true" xmlns:cafienne="org.cafienne">
+            <url xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">http://mock-api:8390/api/CreateEmployeeRecord</url>
+            <method xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">POST</method>
+            <post-content xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">{"name": "${name}", "email": "${email}", "department": "${department}", "startDate": "${startDate}"}</post-content>
+            <http-headers xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">
+                <http-header name="Content-Type">application/json</http-header>
+            </http-headers>
+            <parameterMapping xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" sourceRef="responsePayload" targetRef="employeeId"/>
+        </cafienne:implementation>
+    </extensionElements>
+</process>

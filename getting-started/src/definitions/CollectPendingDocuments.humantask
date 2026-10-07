@@ -1,0 +1,40 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="CollectPendingDocuments" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__c1d01" name="name" typeRef="string"/>
+        <input id="email__c1d02" name="email" typeRef="string"/>
+        <input id="openItems__c1d03" name="openItems" typeRef="string"/>
+        <output id="openItems__c1d04" name="openItems" typeRef="string"/>
+        <task-model>{
+      "schema": {
+        "title": "Collect pending documents",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Full name",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "title": "Email",
+            "readOnly": true
+          },
+          "openItems": {
+            "type": "string",
+            "title": "Pending documents / open items (update what was collected and what is still missing)"
+          }
+        }
+      },
+      "uiSchema": {
+        "ui:order": [
+          "name",
+          "email",
+          "openItems"
+        ],
+        "openItems": {
+          "ui:widget": "textarea"
+        }
+      }
+    }</task-model>
+    </cafienne:implementation>
+</humanTask>

@@ -1,0 +1,18 @@
+<process xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne" name="RevokeAccess" implementationType="http://www.omg.org/spec/CMMN/ProcessType/Unspecified">
+    <documentation textFormat="text/plain">
+        <text><![CDATA[Identity system: revoke all access]]></text>
+    </documentation>
+    <input id="employeeId__48052" name="employeeId" typeRef="string"/>
+    <input id="email__d15e6" name="email" typeRef="string"/>
+    <input id="lastWorkingDay__fd2e6" name="lastWorkingDay" typeRef="string"/>
+    <extensionElements mustUnderstand="false">
+        <cafienne:implementation class="org.cafienne.processtask.implementation.http.HTTPCallDefinition" async="true" xmlns:cafienne="org.cafienne">
+            <url xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">http://mock-api:8390/api/RevokeAccess</url>
+            <method xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">POST</method>
+            <post-content xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">{"employeeId": "${employeeId}", "email": "${email}", "lastWorkingDay": "${lastWorkingDay}"}</post-content>
+            <http-headers xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">
+                <http-header name="Content-Type">application/json</http-header>
+            </http-headers>
+        </cafienne:implementation>
+    </extensionElements>
+</process>

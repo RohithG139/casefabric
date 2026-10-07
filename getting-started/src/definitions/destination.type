@@ -1,0 +1,6 @@
+<type id="destination.type" name="destination">
+    <schema>
+        <property id="sp__tbdOm_0" name="City" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__tbdOm_1" name="Country" type="string" multiplicity="ExactlyOne"/>
+    </schema>
+</type>

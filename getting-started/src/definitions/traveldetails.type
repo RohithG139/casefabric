@@ -1,0 +1,13 @@
+<type id="traveldetails.type" name="traveldetails">
+    <schema>
+        <property id="sp__9tWb4_0" name="DepartureDate" type="string" multiplicity="ExactlyOne" format="date"/>
+        <property id="sp__9tWb4_1" name="ReturnDate" type="string" multiplicity="ExactlyOne" format="date"/>
+        <property id="sp__9tWb4_2" name="DeparturePoint" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__9tWb4_3" name="ReturnPoint" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__9tWb4_4" name="AdvanceRequired" type="boolean" multiplicity="ExactlyOne"/>
+        <property id="sp__9tWb4_5" name="Purpose" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__9tWb4_6" name="Justification" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__9tWb4_7" name="Comments" type="string" multiplicity="ExactlyOne"/>
+        <property id="sp__9tWb4_8" name="Destination" type="destination.type" multiplicity="ZeroOrMore"/>
+    </schema>
+</type>

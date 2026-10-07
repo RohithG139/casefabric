@@ -1,0 +1,1905 @@
+<case xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne" id="emp.case" name="emp" expressionLanguage="spel" guid="_hP39k">
+    <documentation textFormat="text/plain">
+        <text><![CDATA[Case of person: one case per employee, from hire to exit.]]></text>
+    </documentation>
+    <caseFileModel typeRef="emp.type"/>
+    <casePlanModel id="cm__KlkBH_0" name="Case of person" autoComplete="true">
+        <exitCriterion id="xc_x_case">
+            <planItemOnPart id="op_x_case" sourceRef="pi_stage3">
+                <standardEvent>complete</standardEvent>
+            </planItemOnPart>
+        </exitCriterion>
+        <stage id="pi_stage1" name="Onboarding" autoComplete="false">
+            <exitCriterion id="xc_x_stage1">
+                <planItemOnPart id="op_x_stage1" sourceRef="pi_exit_requested">
+                    <standardEvent>occur</standardEvent>
+                </planItemOnPart>
+            </exitCriterion>
+            <humanTask id="pi_collect_verify" name="Collect and verify employee details" isBlocking="true" performerRef="cr__8b8pm_2">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[Owner: HR]]></text>
+                </documentation>
+                <outputs id="out_collect_verify_name" name="Employee.name" bindingRef="Employee"/>
+                <outputs id="out_collect_verify_email" name="Employee.email" bindingRef="Employee"/>
+                <outputs id="out_collect_verify_department" name="Employee.department" bindingRef="Employee"/>
+                <outputs id="out_collect_verify_startDate" name="Employee.startDate" bindingRef="Employee"/>
+                <extensionElements mustUnderstand="false">
+                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="CollectEmployeeDetails.humantask">
+                        <parameterMapping id="pm_collect_verify_out_name" sourceRef="name__17a31" targetRef="out_collect_verify_name">
+                            <transformation id="pm_collect_verify_out_name_t">
+                                <body><![CDATA[{'name':name}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_collect_verify_out_email" sourceRef="email__54df4" targetRef="out_collect_verify_email">
+                            <transformation id="pm_collect_verify_out_email_t">
+                                <body><![CDATA[{'email':email}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_collect_verify_out_department" sourceRef="department__c6d5b" targetRef="out_collect_verify_department">
+                            <transformation id="pm_collect_verify_out_department_t">
+                                <body><![CDATA[{'department':department}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_collect_verify_out_startDate" sourceRef="startDate__800a3" targetRef="out_collect_verify_startDate">
+                            <transformation id="pm_collect_verify_out_startDate_t">
+                                <body><![CDATA[{'startDate':startDate}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                    </cafienne:implementation>
+                </extensionElements>
+            </humanTask>
+            <processTask id="pi_create_record" name="Create employee record" isBlocking="true" processRef="CreateEmployeeRecord.process">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[System task: HR system]]></text>
+                </documentation>
+                <entryCriterion id="ec_s_create">
+                    <planItemOnPart id="op_s_create" sourceRef="pi_collect_verify">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <inputs id="in_create_record_Employee" name="Employee" bindingRef="Employee"/>
+                <outputs id="out_create_record_employeeId" name="Employee.employeeId" bindingRef="Employee"/>
+                <parameterMapping id="pm_create_record_in_name" sourceRef="in_create_record_Employee" targetRef="name__b5bd4">
+                    <transformation id="pm_create_record_in_name_t">
+                        <body><![CDATA[Employee?.name]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_create_record_in_email" sourceRef="in_create_record_Employee" targetRef="email__d03af">
+                    <transformation id="pm_create_record_in_email_t">
+                        <body><![CDATA[Employee?.email]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_create_record_in_department" sourceRef="in_create_record_Employee" targetRef="department__2f6d7">
+                    <transformation id="pm_create_record_in_department_t">
+                        <body><![CDATA[Employee?.department]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_create_record_in_startDate" sourceRef="in_create_record_Employee" targetRef="startDate__6702e">
+                    <transformation id="pm_create_record_in_startDate_t">
+                        <body><![CDATA[Employee?.startDate]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_create_record_out_employeeId" sourceRef="employeeId__c1907" targetRef="out_create_record_employeeId">
+                    <transformation id="pm_create_record_out_employeeId_t">
+                        <body><![CDATA[{'employeeId':employeeId?.employeeId}]]></body>
+                    </transformation>
+                </parameterMapping>
+            </processTask>
+            <humanTask id="pi_assign_role" name="Assign role and manager" isBlocking="true" performerRef="cr__8b8pm_2">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[Owner: HR / Manager]]></text>
+                </documentation>
+                <entryCriterion id="ec_s_assign">
+                    <planItemOnPart id="op_s_assign" sourceRef="pi_create_record">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <inputs id="_hP39k_444" name="Employee" bindingRef="Employee"/>
+                <outputs id="_hP39k_449" name="Employee" bindingRef="Employee"/>
+                <outputs id="_hP39k_450" name="Employee.1" bindingRef="Employee"/>
+                <extensionElements mustUnderstand="false">
+                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="AssignRoleManager.humantask">
+                        <parameterMapping id="_hP39k_244" sourceRef="_hP39k_444" targetRef="name__44847">
+                            <transformation id="_hP39k_445">
+                                <body><![CDATA[Employee?.name]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="_hP39k_245" sourceRef="_hP39k_444" targetRef="employeeId__7e0dc">
+                            <transformation id="_hP39k_446">
+                                <body><![CDATA[Employee?.employeeId]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="_hP39k_246" sourceRef="_hP39k_444" targetRef="department__a6b37">
+                            <transformation id="_hP39k_447">
+                                <body><![CDATA[Employee?.department]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="_hP39k_247" sourceRef="role__069b7" targetRef="_hP39k_449">
+                            <transformation id="_hP39k_448">
+                                <body><![CDATA[{'role':role}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="_hP39k_248" sourceRef="manager__19d01" targetRef="_hP39k_450">
+                            <transformation id="_hP39k_451">
+                                <body><![CDATA[{'manager':manager}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                    </cafienne:implementation>
+                </extensionElements>
+            </humanTask>
+            <humanTask id="pi_complete_onb" name="Complete onboarding process" isBlocking="true" performerRef="cr__8b8pm_2">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[Owner: HR / Manager]]></text>
+                </documentation>
+                <entryCriterion id="ec_s_complete">
+                    <planItemOnPart id="op_s_complete_1" sourceRef="pi_assign_role">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <entryCriterion id="ec_s_complete_again">
+                    <planItemOnPart id="op_s_complete_again" sourceRef="pi_collect_pending">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <itemControl>
+                    <repetitionRule>
+                        <condition>
+                            <body><![CDATA[true]]></body>
+                        </condition>
+                    </repetitionRule>
+                </itemControl>
+                <inputs id="in_complete_onb_Employee" name="Employee" bindingRef="Employee"/>
+                <inputs id="in_complete_onb_Onboarding" name="Onboarding" bindingRef="Onboarding"/>
+                <outputs id="out_complete_onb_onboardingComplete" name="Onboarding.onboardingComplete" bindingRef="Onboarding"/>
+                <outputs id="out_complete_onb_openItems" name="Onboarding.openItems" bindingRef="Onboarding"/>
+                <extensionElements mustUnderstand="false">
+                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="CompleteOnboarding.humantask">
+                        <parameterMapping id="pm_complete_onb_in_name" sourceRef="in_complete_onb_Employee" targetRef="name__5e0ba">
+                            <transformation id="pm_complete_onb_in_name_t">
+                                <body><![CDATA[Employee?.name]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_complete_onb_in_role" sourceRef="in_complete_onb_Employee" targetRef="role__ee875">
+                            <transformation id="pm_complete_onb_in_role_t">
+                                <body><![CDATA[Employee?.role]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_complete_onb_in_manager" sourceRef="in_complete_onb_Employee" targetRef="manager__c6380">
+                            <transformation id="pm_complete_onb_in_manager_t">
+                                <body><![CDATA[Employee?.manager]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_complete_onb_in_openItems" sourceRef="in_complete_onb_Onboarding" targetRef="openItems__4fce4">
+                            <transformation id="pm_complete_onb_in_openItems_t">
+                                <body><![CDATA[Onboarding?.openItems]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_complete_onb_out_onboardingComplete" sourceRef="onboardingComplete__dd13c" targetRef="out_complete_onb_onboardingComplete">
+                            <transformation id="pm_complete_onb_out_onboardingComplete_t">
+                                <body><![CDATA[{'onboardingComplete':onboardingComplete}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_complete_onb_out_openItems" sourceRef="openItems__d00ca" targetRef="out_complete_onb_openItems">
+                            <transformation id="pm_complete_onb_out_openItems_t">
+                                <body><![CDATA[{'openItems':openItems}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                    </cafienne:implementation>
+                </extensionElements>
+            </humanTask>
+            <humanTask id="pi_collect_pending" name="Collect pending documents" isBlocking="true" performerRef="cr__8b8pm_2">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[Owner: HR. Runs when onboarding is not complete; then onboarding is completed again.]]></text>
+                </documentation>
+                <entryCriterion id="ec_s_pending">
+                    <ifPart contextRef="Onboarding">
+                        <condition>
+                            <body><![CDATA[Onboarding?.onboardingComplete != true]]></body>
+                        </condition>
+                    </ifPart>
+                    <planItemOnPart id="op_s_pending" sourceRef="pi_complete_onb">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <itemControl>
+                    <repetitionRule>
+                        <condition>
+                            <body><![CDATA[true]]></body>
+                        </condition>
+                    </repetitionRule>
+                </itemControl>
+                <inputs id="in_collect_pending_Employee" name="Employee" bindingRef="Employee"/>
+                <inputs id="in_collect_pending_Onboarding" name="Onboarding" bindingRef="Onboarding"/>
+                <outputs id="out_collect_pending_openItems" name="Onboarding.openItems" bindingRef="Onboarding"/>
+                <extensionElements mustUnderstand="false">
+                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="CollectPendingDocuments.humantask">
+                        <parameterMapping id="pm_collect_pending_in_name" sourceRef="in_collect_pending_Employee" targetRef="name__c1d01">
+                            <transformation id="pm_collect_pending_in_name_t">
+                                <body><![CDATA[Employee?.name]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_collect_pending_in_email" sourceRef="in_collect_pending_Employee" targetRef="email__c1d02">
+                            <transformation id="pm_collect_pending_in_email_t">
+                                <body><![CDATA[Employee?.email]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_collect_pending_in_openItems" sourceRef="in_collect_pending_Onboarding" targetRef="openItems__c1d03">
+                            <transformation id="pm_collect_pending_in_openItems_t">
+                                <body><![CDATA[Onboarding?.openItems]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_collect_pending_out_openItems" sourceRef="openItems__c1d04" targetRef="out_collect_pending_openItems">
+                            <transformation id="pm_collect_pending_out_openItems_t">
+                                <body><![CDATA[{'openItems':openItems}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                    </cafienne:implementation>
+                </extensionElements>
+            </humanTask>
+            <milestone id="pi_onboarded" name="Employee onboarded">
+                <entryCriterion id="ec_s_onboarded">
+                    <ifPart contextRef="Onboarding">
+                        <condition>
+                            <body><![CDATA[Onboarding?.onboardingComplete == true]]></body>
+                        </condition>
+                    </ifPart>
+                    <planItemOnPart id="op_s_onboarded" sourceRef="pi_complete_onb">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+            </milestone>
+        </stage>
+        <stage id="pi_stage2" name="Active employment" autoComplete="false">
+            <entryCriterion id="ec_s_stage2">
+                <planItemOnPart id="op_s_stage2" sourceRef="pi_onboarded">
+                    <standardEvent>occur</standardEvent>
+                </planItemOnPart>
+            </entryCriterion>
+            <exitCriterion id="xc_x_s2_exit">
+                <planItemOnPart id="op_x_s2_exit" sourceRef="pi_exit_requested">
+                    <standardEvent>occur</standardEvent>
+                </planItemOnPart>
+            </exitCriterion>
+            <exitCriterion id="xc_x_s2_pip">
+                <planItemOnPart id="op_x_s2_pip" sourceRef="pi_pip_not_met">
+                    <standardEvent>occur</standardEvent>
+                </planItemOnPart>
+            </exitCriterion>
+            <stage id="pi_work_cycle" name="Work cycle" autoComplete="false">
+                <stage id="pi_project_round" name="Project round" autoComplete="true">
+                    <exitCriterion id="xc_x_round_bench">
+                        <planItemOnPart id="op_x_round_bench" sourceRef="pi_bench_timer">
+                            <standardEvent>occur</standardEvent>
+                        </planItemOnPart>
+                    </exitCriterion>
+                    <itemControl>
+                        <repetitionRule>
+                            <condition>
+                                <body><![CDATA[true]]></body>
+                            </condition>
+                        </repetitionRule>
+                    </itemControl>
+                    <humanTask id="pi_check_status" name="Check project status" isBlocking="true" performerRef="cr__8b8pm_1">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Resource / Project Manager]]></text>
+                        </documentation>
+                        <inputs id="in_check_status_Employee" name="Employee" bindingRef="Employee"/>
+                        <outputs id="out_check_status_projectAvailable" name="ProjectAssignment.projectAvailable" bindingRef="ProjectAssignment"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="Checkprojectstatus.humantask">
+                                <parameterMapping id="pm_check_status_in_name" sourceRef="in_check_status_Employee" targetRef="name__8173e">
+                                    <transformation id="pm_check_status_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_check_status_in_role" sourceRef="in_check_status_Employee" targetRef="role__44a62">
+                                    <transformation id="pm_check_status_in_role_t">
+                                        <body><![CDATA[Employee?.role]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_check_status_in_department" sourceRef="in_check_status_Employee" targetRef="department__ec182">
+                                    <transformation id="pm_check_status_in_department_t">
+                                        <body><![CDATA[Employee?.department]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_check_status_out_projectAvailable" sourceRef="projectAvailable__3d3dc" targetRef="out_check_status_projectAvailable">
+                                    <transformation id="pm_check_status_out_projectAvailable_t">
+                                        <body><![CDATA[{'projectAvailable':projectAvailable,'onProject':false}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_bench" name="Stay on bench" isBlocking="true" performerRef="cr__8b8pm_0">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Employee]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_bench">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.projectAvailable != true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_bench" sourceRef="pi_check_status">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <inputs id="in_bench_Employee" name="Employee" bindingRef="Employee"/>
+                        <outputs id="out_bench_skillGap" name="ProjectAssignment.skillGap" bindingRef="ProjectAssignment"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="StayOnBench.humantask">
+                                <parameterMapping id="pm_bench_in_name" sourceRef="in_bench_Employee" targetRef="name__09a41">
+                                    <transformation id="pm_bench_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_bench_in_role" sourceRef="in_bench_Employee" targetRef="role__23391">
+                                    <transformation id="pm_bench_in_role_t">
+                                        <body><![CDATA[Employee?.role]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_bench_out_skillGap" sourceRef="skillGap__87397" targetRef="out_bench_skillGap">
+                                    <transformation id="pm_bench_out_skillGap_t">
+                                        <body><![CDATA[{'skillGap':skillGap}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_assign_project" name="Assign project" isBlocking="true" performerRef="cr__8b8pm_1">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Hiring / PM]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_assignp">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.projectAvailable == true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_assignp" sourceRef="pi_check_status">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_assign_again">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.accepted != true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_assign_again" sourceRef="pi_assign_project">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <inputs id="in_assign_project_Employee" name="Employee" bindingRef="Employee"/>
+                        <outputs id="out_assign_project_projectId" name="ProjectAssignment.projectId" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_assign_project_accepted" name="ProjectAssignment.accepted" bindingRef="ProjectAssignment"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="AssignProject.humantask">
+                                <parameterMapping id="pm_assign_project_in_name" sourceRef="in_assign_project_Employee" targetRef="name__0e573">
+                                    <transformation id="pm_assign_project_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_assign_project_in_role" sourceRef="in_assign_project_Employee" targetRef="role__4c6e9">
+                                    <transformation id="pm_assign_project_in_role_t">
+                                        <body><![CDATA[Employee?.role]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_assign_project_out_projectId" sourceRef="projectId__c6425" targetRef="out_assign_project_projectId">
+                                    <transformation id="pm_assign_project_out_projectId_t">
+                                        <body><![CDATA[{'projectId':projectId}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_assign_project_out_accepted" sourceRef="accepted__f9f2c" targetRef="out_assign_project_accepted">
+                                    <transformation id="pm_assign_project_out_accepted_t">
+                                        <body><![CDATA[{'accepted':accepted,'onProject':accepted == true}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <timerEvent id="pi_bench_timer" name="Recheck after a week">
+                        <timerExpression>
+                            <body><![CDATA[P7D]]></body>
+                        </timerExpression>
+                        <planItemStartTrigger id="tr_bench_timer" sourceRef="pi_bench">
+                            <standardEvent>start</standardEvent>
+                        </planItemStartTrigger>
+                    </timerEvent>
+                    <humanTask id="pi_perform_work" name="Perform project work" isBlocking="true" performerRef="cr__8b8pm_0">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Employee]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_perform">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.accepted == true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_perform" sourceRef="pi_assign_project">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_continue">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.reviewOutcome == 'continue']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_continue" sourceRef="pi_project_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <inputs id="in_perform_work_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_perform_work_ProjectAssignment" name="ProjectAssignment" bindingRef="ProjectAssignment"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="PerformProjectWork.humantask">
+                                <parameterMapping id="pm_perform_work_in_name" sourceRef="in_perform_work_Employee" targetRef="name__2e57f">
+                                    <transformation id="pm_perform_work_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_perform_work_in_projectId" sourceRef="in_perform_work_ProjectAssignment" targetRef="projectId__b329a">
+                                    <transformation id="pm_perform_work_in_projectId_t">
+                                        <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_project_review" name="Project and performance review" isBlocking="true" performerRef="cr__8b8pm_1">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Manager]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_review">
+                            <planItemOnPart id="op_s_review" sourceRef="pi_perform_work">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <inputs id="in_project_review_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_project_review_ProjectAssignment" name="ProjectAssignment" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_project_review_reviewOutcome" name="ProjectAssignment.reviewOutcome" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_project_review_skillGap" name="ProjectAssignment.skillGap" bindingRef="ProjectAssignment"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ProjectReview.humantask">
+                                <parameterMapping id="pm_project_review_in_name" sourceRef="in_project_review_Employee" targetRef="name__a7c82">
+                                    <transformation id="pm_project_review_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_project_review_in_projectId" sourceRef="in_project_review_ProjectAssignment" targetRef="projectId__3bfaf">
+                                    <transformation id="pm_project_review_in_projectId_t">
+                                        <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_project_review_out_reviewOutcome" sourceRef="reviewOutcome__0f9c2" targetRef="out_project_review_reviewOutcome">
+                                    <transformation id="pm_project_review_out_reviewOutcome_t">
+                                        <body><![CDATA[{'reviewOutcome':reviewOutcome}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_project_review_out_skillGap" sourceRef="skillGap__f06f8" targetRef="out_project_review_skillGap">
+                                    <transformation id="pm_project_review_out_skillGap_t">
+                                        <body><![CDATA[{'skillGap':skillGap}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <milestone id="pi_project_delivered" name="Project delivered">
+                        <entryCriterion id="ec_s_delivered">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.reviewOutcome == 'nextProject']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_delivered" sourceRef="pi_project_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                    </milestone>
+                    <milestone id="pi_perf_concern" name="Performance concern">
+                        <entryCriterion id="ec_s_concern">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.reviewOutcome == 'poorPerformance']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_concern" sourceRef="pi_project_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                    </milestone>
+                </stage>
+            </stage>
+            <stage id="pi_dev_cycle" name="Development plan cycle" autoComplete="false">
+                <stage id="pi_dev_plan" name="Development plan" autoComplete="true">
+                    <exitCriterion id="xc_x_plan_pip">
+                        <planItemOnPart id="op_x_plan_pip" sourceRef="pi_pip">
+                            <standardEvent>start</standardEvent>
+                        </planItemOnPart>
+                    </exitCriterion>
+                    <itemControl>
+                        <repetitionRule>
+                            <condition>
+                                <body><![CDATA[true]]></body>
+                            </condition>
+                        </repetitionRule>
+                    </itemControl>
+                    <userEvent id="pi_start_dev" name="Start development plan" authorizedRoleRefs="cr__8b8pm_1 cr__8b8pm_0">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Raised by Manager or the Employee.]]></text>
+                        </documentation>
+                    </userEvent>
+                    <stage id="pi_plan" name="Plan" autoComplete="true">
+                        <entryCriterion id="ec_s_plan_user">
+                            <planItemOnPart id="op_s_plan_user" sourceRef="pi_start_dev">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_plan_gap">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.skillGap == true and case.file.DevelopmentPlan.value?.status != 'active' and case.file.PIP.value?.status != 'active']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_plan_gap" sourceRef="pi_project_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_plan_bench">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.skillGap == true and case.file.DevelopmentPlan.value?.status != 'active' and case.file.PIP.value?.status != 'active']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_plan_bench" sourceRef="pi_bench">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_plan_more">
+                            <ifPart contextRef="DevelopmentPlan">
+                                <condition>
+                                    <body><![CDATA[DevelopmentPlan?.furtherNeeds == true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_plan_more" sourceRef="pi_evaluate">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_plan_pip">
+                            <planItemOnPart id="op_s_plan_pip" sourceRef="pi_pip_passed">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <humanTask id="pi_define_plan" name="Define goals and plan" isBlocking="true" performerRef="cr__8b8pm_1">
+                            <documentation textFormat="text/plain">
+                                <text><![CDATA[Owner: Employee / Manager]]></text>
+                            </documentation>
+                            <inputs id="in_define_plan_Employee" name="Employee" bindingRef="Employee"/>
+                            <inputs id="in_define_plan_ProjectAssignment" name="ProjectAssignment" bindingRef="ProjectAssignment"/>
+                            <outputs id="out_define_plan_goals" name="DevelopmentPlan.goals" bindingRef="DevelopmentPlan"/>
+                            <outputs id="out_define_plan_activities" name="DevelopmentPlan.activities" bindingRef="DevelopmentPlan"/>
+                            <extensionElements mustUnderstand="false">
+                                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="DefinePlan.humantask">
+                                    <parameterMapping id="pm_define_plan_in_name" sourceRef="in_define_plan_Employee" targetRef="name__0ed4b">
+                                        <transformation id="pm_define_plan_in_name_t">
+                                            <body><![CDATA[Employee?.name]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_define_plan_in_role" sourceRef="in_define_plan_Employee" targetRef="role__85fca">
+                                        <transformation id="pm_define_plan_in_role_t">
+                                            <body><![CDATA[Employee?.role]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_define_plan_in_skillGap" sourceRef="in_define_plan_ProjectAssignment" targetRef="skillGap__87372">
+                                        <transformation id="pm_define_plan_in_skillGap_t">
+                                            <body><![CDATA[ProjectAssignment?.skillGap]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_define_plan_out_goals" sourceRef="goals__2f81d" targetRef="out_define_plan_goals">
+                                        <transformation id="pm_define_plan_out_goals_t">
+                                            <body><![CDATA[{'goals':goals,'status':'active'}]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_define_plan_out_activities" sourceRef="activities__e2ee3" targetRef="out_define_plan_activities">
+                                        <transformation id="pm_define_plan_out_activities_t">
+                                            <body><![CDATA[{'activities':activities}]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                </cafienne:implementation>
+                            </extensionElements>
+                        </humanTask>
+                        <humanTask id="pi_approve_plan" name="Approve plan" isBlocking="true" performerRef="cr__8b8pm_1">
+                            <documentation textFormat="text/plain">
+                                <text><![CDATA[Owner: Manager]]></text>
+                            </documentation>
+                            <entryCriterion id="ec_s_approve">
+                                <planItemOnPart id="op_s_approve" sourceRef="pi_define_plan">
+                                    <standardEvent>complete</standardEvent>
+                                </planItemOnPart>
+                            </entryCriterion>
+                            <entryCriterion id="ec_s_approve_again">
+                                <planItemOnPart id="op_s_approve_again" sourceRef="pi_revise_plan">
+                                    <standardEvent>complete</standardEvent>
+                                </planItemOnPart>
+                            </entryCriterion>
+                            <itemControl>
+                                <repetitionRule>
+                                    <condition>
+                                        <body><![CDATA[true]]></body>
+                                    </condition>
+                                </repetitionRule>
+                            </itemControl>
+                            <inputs id="in_approve_plan_Employee" name="Employee" bindingRef="Employee"/>
+                            <inputs id="in_approve_plan_DevelopmentPlan" name="DevelopmentPlan" bindingRef="DevelopmentPlan"/>
+                            <outputs id="out_approve_plan_approved" name="DevelopmentPlan.approved" bindingRef="DevelopmentPlan"/>
+                            <extensionElements mustUnderstand="false">
+                                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ApprovePlan.humantask">
+                                    <parameterMapping id="pm_approve_plan_in_name" sourceRef="in_approve_plan_Employee" targetRef="name__651c3">
+                                        <transformation id="pm_approve_plan_in_name_t">
+                                            <body><![CDATA[Employee?.name]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_approve_plan_in_goals" sourceRef="in_approve_plan_DevelopmentPlan" targetRef="goals__02ebb">
+                                        <transformation id="pm_approve_plan_in_goals_t">
+                                            <body><![CDATA[DevelopmentPlan?.goals]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_approve_plan_in_activities" sourceRef="in_approve_plan_DevelopmentPlan" targetRef="activities__d9954">
+                                        <transformation id="pm_approve_plan_in_activities_t">
+                                            <body><![CDATA[DevelopmentPlan?.activities]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_approve_plan_out_approved" sourceRef="approved__1fed1" targetRef="out_approve_plan_approved">
+                                        <transformation id="pm_approve_plan_out_approved_t">
+                                            <body><![CDATA[{'approved':approved}]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                </cafienne:implementation>
+                            </extensionElements>
+                        </humanTask>
+                        <humanTask id="pi_revise_plan" name="Revise plan" isBlocking="true" performerRef="cr__8b8pm_1">
+                            <documentation textFormat="text/plain">
+                                <text><![CDATA[Owner: Manager]]></text>
+                            </documentation>
+                            <entryCriterion id="ec_s_revise">
+                                <ifPart contextRef="DevelopmentPlan">
+                                    <condition>
+                                        <body><![CDATA[DevelopmentPlan?.approved != true]]></body>
+                                    </condition>
+                                </ifPart>
+                                <planItemOnPart id="op_s_revise" sourceRef="pi_approve_plan">
+                                    <standardEvent>complete</standardEvent>
+                                </planItemOnPart>
+                            </entryCriterion>
+                            <itemControl>
+                                <repetitionRule>
+                                    <condition>
+                                        <body><![CDATA[true]]></body>
+                                    </condition>
+                                </repetitionRule>
+                            </itemControl>
+                            <inputs id="in_revise_plan_Employee" name="Employee" bindingRef="Employee"/>
+                            <inputs id="in_revise_plan_ProjectAssignment" name="ProjectAssignment" bindingRef="ProjectAssignment"/>
+                            <outputs id="out_revise_plan_goals" name="DevelopmentPlan.goals" bindingRef="DevelopmentPlan"/>
+                            <outputs id="out_revise_plan_activities" name="DevelopmentPlan.activities" bindingRef="DevelopmentPlan"/>
+                            <extensionElements mustUnderstand="false">
+                                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="DefinePlan.humantask">
+                                    <parameterMapping id="pm_revise_plan_in_name" sourceRef="in_revise_plan_Employee" targetRef="name__0ed4b">
+                                        <transformation id="pm_revise_plan_in_name_t">
+                                            <body><![CDATA[Employee?.name]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_revise_plan_in_role" sourceRef="in_revise_plan_Employee" targetRef="role__85fca">
+                                        <transformation id="pm_revise_plan_in_role_t">
+                                            <body><![CDATA[Employee?.role]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_revise_plan_in_skillGap" sourceRef="in_revise_plan_ProjectAssignment" targetRef="skillGap__87372">
+                                        <transformation id="pm_revise_plan_in_skillGap_t">
+                                            <body><![CDATA[ProjectAssignment?.skillGap]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_revise_plan_out_goals" sourceRef="goals__2f81d" targetRef="out_revise_plan_goals">
+                                        <transformation id="pm_revise_plan_out_goals_t">
+                                            <body><![CDATA[{'goals':goals,'status':'active'}]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_revise_plan_out_activities" sourceRef="activities__e2ee3" targetRef="out_revise_plan_activities">
+                                        <transformation id="pm_revise_plan_out_activities_t">
+                                            <body><![CDATA[{'activities':activities}]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                </cafienne:implementation>
+                            </extensionElements>
+                        </humanTask>
+                        <milestone id="pi_plan_approved" name="Plan approved">
+                            <entryCriterion id="ec_s_approved">
+                                <ifPart contextRef="DevelopmentPlan">
+                                    <condition>
+                                        <body><![CDATA[DevelopmentPlan?.approved == true]]></body>
+                                    </condition>
+                                </ifPart>
+                                <planItemOnPart id="op_s_approved" sourceRef="pi_approve_plan">
+                                    <standardEvent>complete</standardEvent>
+                                </planItemOnPart>
+                            </entryCriterion>
+                        </milestone>
+                    </stage>
+                    <stage id="pi_perform" name="Perform plan" autoComplete="true">
+                        <entryCriterion id="ec_s_perform_plan">
+                            <planItemOnPart id="op_s_perform_plan" sourceRef="pi_plan_approved">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <stage id="pi_progress_round" name="Progress check" autoComplete="true">
+                            <itemControl>
+                                <repetitionRule>
+                                    <condition>
+                                        <body><![CDATA[case.file.DevelopmentPlan.value?.progress != 'done']]></body>
+                                    </condition>
+                                </repetitionRule>
+                            </itemControl>
+                            <timerEvent id="pi_progress_timer" name="Progress check due">
+                                <timerExpression>
+                                    <body><![CDATA[P14D]]></body>
+                                </timerExpression>
+                                <planItemStartTrigger id="tr_progress_timer"/>
+                            </timerEvent>
+                            <humanTask id="pi_progress_review" name="Review progress" isBlocking="true" performerRef="cr__8b8pm_1">
+                                <documentation textFormat="text/plain">
+                                    <text><![CDATA[Owner: Manager]]></text>
+                                </documentation>
+                                <entryCriterion id="ec_s_progress">
+                                    <planItemOnPart id="op_s_progress" sourceRef="pi_progress_timer">
+                                        <standardEvent>occur</standardEvent>
+                                    </planItemOnPart>
+                                </entryCriterion>
+                                <itemControl>
+                                    <requiredRule>
+                                        <condition>
+                                            <body><![CDATA[true]]></body>
+                                        </condition>
+                                    </requiredRule>
+                                </itemControl>
+                                <inputs id="in_progress_review_DevelopmentPlan" name="DevelopmentPlan" bindingRef="DevelopmentPlan"/>
+                                <outputs id="out_progress_review_progress" name="DevelopmentPlan.progress" bindingRef="DevelopmentPlan"/>
+                                <extensionElements mustUnderstand="false">
+                                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ReviewProgress.humantask">
+                                        <parameterMapping id="pm_progress_review_in_goals" sourceRef="in_progress_review_DevelopmentPlan" targetRef="goals__740ad">
+                                            <transformation id="pm_progress_review_in_goals_t">
+                                                <body><![CDATA[DevelopmentPlan?.goals]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_progress_review_in_activities" sourceRef="in_progress_review_DevelopmentPlan" targetRef="activities__9407a">
+                                            <transformation id="pm_progress_review_in_activities_t">
+                                                <body><![CDATA[DevelopmentPlan?.activities]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_progress_review_in_progress" sourceRef="in_progress_review_DevelopmentPlan" targetRef="progress__b5c64">
+                                            <transformation id="pm_progress_review_in_progress_t">
+                                                <body><![CDATA[DevelopmentPlan?.progress]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_progress_review_out_progress" sourceRef="progress__f15bf" targetRef="out_progress_review_progress">
+                                            <transformation id="pm_progress_review_out_progress_t">
+                                                <body><![CDATA[{'progress':progress}]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                    </cafienne:implementation>
+                                </extensionElements>
+                            </humanTask>
+                        </stage>
+                        <planningTable id="pt_perform">
+                            <humanTask id="pi_act_projects" name="Projects and assignments" applicabilityRuleRefs="ar_act_projects" authorizedRoleRefs="cr__8b8pm_1 cr__8b8pm_0" isBlocking="true" performerRef="cr__8b8pm_0">
+                                <documentation textFormat="text/plain">
+                                    <text><![CDATA[Owner: Employee. Discretionary.]]></text>
+                                </documentation>
+                                <itemControl>
+                                    <repetitionRule>
+                                        <condition>
+                                            <body><![CDATA[true]]></body>
+                                        </condition>
+                                    </repetitionRule>
+                                </itemControl>
+                                <inputs id="in_act_projects_DevelopmentPlan" name="DevelopmentPlan" bindingRef="DevelopmentPlan"/>
+                                <outputs id="out_act_projects_progress" name="DevelopmentPlan.progress" bindingRef="DevelopmentPlan"/>
+                                <extensionElements mustUnderstand="false">
+                                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="PlanActivity.humantask">
+                                        <parameterMapping id="pm_act_projects_in_goals" sourceRef="in_act_projects_DevelopmentPlan" targetRef="goals__f0aaa">
+                                            <transformation id="pm_act_projects_in_goals_t">
+                                                <body><![CDATA[DevelopmentPlan?.goals]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_act_projects_in_activities" sourceRef="in_act_projects_DevelopmentPlan" targetRef="activities__285bd">
+                                            <transformation id="pm_act_projects_in_activities_t">
+                                                <body><![CDATA[DevelopmentPlan?.activities]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_act_projects_out_progress" sourceRef="progress__76a97" targetRef="out_act_projects_progress">
+                                            <transformation id="pm_act_projects_out_progress_t">
+                                                <body><![CDATA[{'progress':progress}]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                    </cafienne:implementation>
+                                </extensionElements>
+                            </humanTask>
+                            <humanTask id="pi_act_training" name="Training and learning" applicabilityRuleRefs="ar_act_training" authorizedRoleRefs="cr__8b8pm_1 cr__8b8pm_0" isBlocking="true" performerRef="cr__8b8pm_0">
+                                <documentation textFormat="text/plain">
+                                    <text><![CDATA[Owner: Employee. Discretionary.]]></text>
+                                </documentation>
+                                <itemControl>
+                                    <repetitionRule>
+                                        <condition>
+                                            <body><![CDATA[true]]></body>
+                                        </condition>
+                                    </repetitionRule>
+                                </itemControl>
+                                <inputs id="in_act_training_DevelopmentPlan" name="DevelopmentPlan" bindingRef="DevelopmentPlan"/>
+                                <outputs id="out_act_training_progress" name="DevelopmentPlan.progress" bindingRef="DevelopmentPlan"/>
+                                <extensionElements mustUnderstand="false">
+                                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="PlanActivity.humantask">
+                                        <parameterMapping id="pm_act_training_in_goals" sourceRef="in_act_training_DevelopmentPlan" targetRef="goals__f0aaa">
+                                            <transformation id="pm_act_training_in_goals_t">
+                                                <body><![CDATA[DevelopmentPlan?.goals]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_act_training_in_activities" sourceRef="in_act_training_DevelopmentPlan" targetRef="activities__285bd">
+                                            <transformation id="pm_act_training_in_activities_t">
+                                                <body><![CDATA[DevelopmentPlan?.activities]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_act_training_out_progress" sourceRef="progress__76a97" targetRef="out_act_training_progress">
+                                            <transformation id="pm_act_training_out_progress_t">
+                                                <body><![CDATA[{'progress':progress}]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                    </cafienne:implementation>
+                                </extensionElements>
+                            </humanTask>
+                            <humanTask id="pi_act_coaching" name="Coaching and mentoring" applicabilityRuleRefs="ar_act_coaching" authorizedRoleRefs="cr__8b8pm_1 cr__8b8pm_0" isBlocking="true" performerRef="cr__8b8pm_1">
+                                <documentation textFormat="text/plain">
+                                    <text><![CDATA[Owner: Manager. Discretionary.]]></text>
+                                </documentation>
+                                <itemControl>
+                                    <repetitionRule>
+                                        <condition>
+                                            <body><![CDATA[true]]></body>
+                                        </condition>
+                                    </repetitionRule>
+                                </itemControl>
+                                <inputs id="in_act_coaching_DevelopmentPlan" name="DevelopmentPlan" bindingRef="DevelopmentPlan"/>
+                                <outputs id="out_act_coaching_progress" name="DevelopmentPlan.progress" bindingRef="DevelopmentPlan"/>
+                                <extensionElements mustUnderstand="false">
+                                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="PlanActivity.humantask">
+                                        <parameterMapping id="pm_act_coaching_in_goals" sourceRef="in_act_coaching_DevelopmentPlan" targetRef="goals__f0aaa">
+                                            <transformation id="pm_act_coaching_in_goals_t">
+                                                <body><![CDATA[DevelopmentPlan?.goals]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_act_coaching_in_activities" sourceRef="in_act_coaching_DevelopmentPlan" targetRef="activities__285bd">
+                                            <transformation id="pm_act_coaching_in_activities_t">
+                                                <body><![CDATA[DevelopmentPlan?.activities]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                        <parameterMapping id="pm_act_coaching_out_progress" sourceRef="progress__76a97" targetRef="out_act_coaching_progress">
+                                            <transformation id="pm_act_coaching_out_progress_t">
+                                                <body><![CDATA[{'progress':progress}]]></body>
+                                            </transformation>
+                                        </parameterMapping>
+                                    </cafienne:implementation>
+                                </extensionElements>
+                            </humanTask>
+                            <applicabilityRule id="ar_act_projects" name="if selected" contextRef="DevelopmentPlan">
+                                <condition>
+                                    <body><![CDATA[DevelopmentPlan?.activities?.![value]?.contains('projects') == true]]></body>
+                                </condition>
+                            </applicabilityRule>
+                            <applicabilityRule id="ar_act_training" name="if selected" contextRef="DevelopmentPlan">
+                                <condition>
+                                    <body><![CDATA[DevelopmentPlan?.activities?.![value]?.contains('training') == true]]></body>
+                                </condition>
+                            </applicabilityRule>
+                            <applicabilityRule id="ar_act_coaching" name="if selected" contextRef="DevelopmentPlan">
+                                <condition>
+                                    <body><![CDATA[DevelopmentPlan?.activities?.![value]?.contains('coaching') == true]]></body>
+                                </condition>
+                            </applicabilityRule>
+                        </planningTable>
+                    </stage>
+                    <milestone id="pi_plan_performed" name="Plan performed">
+                        <entryCriterion id="ec_s_performed">
+                            <planItemOnPart id="op_s_performed" sourceRef="pi_perform">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                    </milestone>
+                    <stage id="pi_evaluate_st" name="Evaluate plan" autoComplete="true">
+                        <entryCriterion id="ec_s_eval">
+                            <planItemOnPart id="op_s_eval" sourceRef="pi_plan_performed">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                            <requiredRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </requiredRule>
+                        </itemControl>
+                        <humanTask id="pi_evaluate" name="Evaluate and document results" isBlocking="true" performerRef="cr__8b8pm_1">
+                            <documentation textFormat="text/plain">
+                                <text><![CDATA[Owner: Manager / HR]]></text>
+                            </documentation>
+                            <inputs id="in_evaluate_DevelopmentPlan" name="DevelopmentPlan" bindingRef="DevelopmentPlan"/>
+                            <outputs id="out_evaluate_furtherNeeds" name="DevelopmentPlan.furtherNeeds" bindingRef="DevelopmentPlan"/>
+                            <extensionElements mustUnderstand="false">
+                                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="EvaluatePlan.humantask">
+                                    <parameterMapping id="pm_evaluate_in_goals" sourceRef="in_evaluate_DevelopmentPlan" targetRef="goals__55b0e">
+                                        <transformation id="pm_evaluate_in_goals_t">
+                                            <body><![CDATA[DevelopmentPlan?.goals]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_evaluate_in_progress" sourceRef="in_evaluate_DevelopmentPlan" targetRef="progress__02a16">
+                                        <transformation id="pm_evaluate_in_progress_t">
+                                            <body><![CDATA[DevelopmentPlan?.progress]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_evaluate_out_furtherNeeds" sourceRef="furtherNeeds__6ada2" targetRef="out_evaluate_furtherNeeds">
+                                        <transformation id="pm_evaluate_out_furtherNeeds_t">
+                                            <body><![CDATA[{'furtherNeeds':furtherNeeds,'status': furtherNeeds == true ? 'active' : 'closed'}]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                </cafienne:implementation>
+                            </extensionElements>
+                        </humanTask>
+                        <milestone id="pi_plan_closed" name="Plan closed">
+                            <entryCriterion id="ec_s_closed">
+                                <ifPart contextRef="DevelopmentPlan">
+                                    <condition>
+                                        <body><![CDATA[DevelopmentPlan?.furtherNeeds != true]]></body>
+                                    </condition>
+                                </ifPart>
+                                <planItemOnPart id="op_s_closed" sourceRef="pi_evaluate">
+                                    <standardEvent>complete</standardEvent>
+                                </planItemOnPart>
+                            </entryCriterion>
+                        </milestone>
+                    </stage>
+                </stage>
+            </stage>
+            <stage id="pi_appraisal_cycle" name="Appraisal cycle" autoComplete="false">
+                <stage id="pi_appraisal_round" name="Appraisal round" autoComplete="true">
+                    <itemControl>
+                        <repetitionRule>
+                            <condition>
+                                <body><![CDATA[true]]></body>
+                            </condition>
+                        </repetitionRule>
+                    </itemControl>
+                    <timerEvent id="pi_appraisal_timer" name="Appraisal due">
+                        <timerExpression>
+                            <body><![CDATA[P365D]]></body>
+                        </timerExpression>
+                        <planItemStartTrigger id="tr_appraisal_timer"/>
+                    </timerEvent>
+                    <humanTask id="pi_self_review" name="Self review" isBlocking="true" performerRef="cr__8b8pm_0">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Employee]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_self">
+                            <planItemOnPart id="op_s_self" sourceRef="pi_appraisal_timer">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <inputs id="in_self_review_Employee" name="Employee" bindingRef="Employee"/>
+                        <outputs id="out_self_review_selfScore" name="Appraisal.selfScore" bindingRef="Appraisal"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="SelfReview.humantask">
+                                <parameterMapping id="pm_self_review_in_name" sourceRef="in_self_review_Employee" targetRef="name__de3e4">
+                                    <transformation id="pm_self_review_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_self_review_in_role" sourceRef="in_self_review_Employee" targetRef="role__1bb2c">
+                                    <transformation id="pm_self_review_in_role_t">
+                                        <body><![CDATA[Employee?.role]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_self_review_out_selfScore" sourceRef="selfScore__433f9" targetRef="out_self_review_selfScore">
+                                    <transformation id="pm_self_review_out_selfScore_t">
+                                        <body><![CDATA[{'selfScore':selfScore}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_manager_review" name="Manager review" isBlocking="true" performerRef="cr__8b8pm_1">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Manager]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_mgr">
+                            <planItemOnPart id="op_s_mgr" sourceRef="pi_appraisal_timer">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <inputs id="in_manager_review_Employee" name="Employee" bindingRef="Employee"/>
+                        <outputs id="out_manager_review_managerScore" name="Appraisal.managerScore" bindingRef="Appraisal"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ManagerReview.humantask">
+                                <parameterMapping id="pm_manager_review_in_name" sourceRef="in_manager_review_Employee" targetRef="name__2f750">
+                                    <transformation id="pm_manager_review_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_manager_review_in_role" sourceRef="in_manager_review_Employee" targetRef="role__6a726">
+                                    <transformation id="pm_manager_review_in_role_t">
+                                        <body><![CDATA[Employee?.role]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_manager_review_out_managerScore" sourceRef="managerScore__f6590" targetRef="out_manager_review_managerScore">
+                                    <transformation id="pm_manager_review_out_managerScore_t">
+                                        <body><![CDATA[{'managerScore':managerScore}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_client_review" name="Client review" isBlocking="true" performerRef="cr__8b8pm_3">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Client]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_client">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.onProject == true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_client" sourceRef="pi_appraisal_timer">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <inputs id="in_client_review_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_client_review_ProjectAssignment" name="ProjectAssignment" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_client_review_clientScore" name="Appraisal.clientScore" bindingRef="Appraisal"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ClientReview.humantask">
+                                <parameterMapping id="pm_client_review_in_name" sourceRef="in_client_review_Employee" targetRef="name__d4831">
+                                    <transformation id="pm_client_review_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_client_review_in_projectId" sourceRef="in_client_review_ProjectAssignment" targetRef="projectId__c45d9">
+                                    <transformation id="pm_client_review_in_projectId_t">
+                                        <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_client_review_out_clientScore" sourceRef="clientScore__7c3ba" targetRef="out_client_review_clientScore">
+                                    <transformation id="pm_client_review_out_clientScore_t">
+                                        <body><![CDATA[{'clientScore':clientScore}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_finalize" name="Consolidate and finalize appraisal" isBlocking="true" performerRef="cr__8b8pm_2">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: HR]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_fin_all">
+                            <planItemOnPart id="op_s_fin_all_0" sourceRef="pi_self_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                            <planItemOnPart id="op_s_fin_all_1" sourceRef="pi_manager_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                            <planItemOnPart id="op_s_fin_all_2" sourceRef="pi_client_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_fin_two">
+                            <ifPart contextRef="ProjectAssignment">
+                                <condition>
+                                    <body><![CDATA[ProjectAssignment?.onProject != true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_fin_two_0" sourceRef="pi_self_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                            <planItemOnPart id="op_s_fin_two_1" sourceRef="pi_manager_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <requiredRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </requiredRule>
+                        </itemControl>
+                        <inputs id="in_finalize_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_finalize_Appraisal" name="Appraisal" bindingRef="Appraisal"/>
+                        <outputs id="out_finalize_finalScore" name="Appraisal.finalScore" bindingRef="Appraisal"/>
+                        <outputs id="out_finalize_outcome" name="Appraisal.outcome" bindingRef="Appraisal"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ConsolidateAppraisal.humantask">
+                                <parameterMapping id="pm_finalize_in_name" sourceRef="in_finalize_Employee" targetRef="name__5cd61">
+                                    <transformation id="pm_finalize_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_finalize_in_selfScore" sourceRef="in_finalize_Appraisal" targetRef="selfScore__b7f05">
+                                    <transformation id="pm_finalize_in_selfScore_t">
+                                        <body><![CDATA[Appraisal?.selfScore]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_finalize_in_managerScore" sourceRef="in_finalize_Appraisal" targetRef="managerScore__61a66">
+                                    <transformation id="pm_finalize_in_managerScore_t">
+                                        <body><![CDATA[Appraisal?.managerScore]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_finalize_in_clientScore" sourceRef="in_finalize_Appraisal" targetRef="clientScore__f30a8">
+                                    <transformation id="pm_finalize_in_clientScore_t">
+                                        <body><![CDATA[Appraisal?.clientScore]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_finalize_out_finalScore" sourceRef="finalScore__da711" targetRef="out_finalize_finalScore">
+                                    <transformation id="pm_finalize_out_finalScore_t">
+                                        <body><![CDATA[{'finalScore':finalScore}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_finalize_out_outcome" sourceRef="outcome__a755b" targetRef="out_finalize_outcome">
+                                    <transformation id="pm_finalize_out_outcome_t">
+                                        <body><![CDATA[{'outcome':outcome}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_promotion" name="promotion" isBlocking="true" performerRef="cr__8b8pm_2">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: HR]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_promo">
+                            <ifPart contextRef="Appraisal">
+                                <condition>
+                                    <body><![CDATA[Appraisal?.outcome == 'promoted']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_promo" sourceRef="pi_finalize">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <inputs id="in_promotion_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_promotion_Appraisal" name="Appraisal" bindingRef="Appraisal"/>
+                        <outputs id="out_promotion_role" name="Employee.role" bindingRef="Employee"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ProcessPromotion.humantask">
+                                <parameterMapping id="pm_promotion_in_name" sourceRef="in_promotion_Employee" targetRef="name__a5c00">
+                                    <transformation id="pm_promotion_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_promotion_in_role" sourceRef="in_promotion_Employee" targetRef="role__27388">
+                                    <transformation id="pm_promotion_in_role_t">
+                                        <body><![CDATA[Employee?.role]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_promotion_in_finalScore" sourceRef="in_promotion_Appraisal" targetRef="finalScore__bc069">
+                                    <transformation id="pm_promotion_in_finalScore_t">
+                                        <body><![CDATA[Appraisal?.finalScore]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_promotion_out_role" sourceRef="role__0b2e3" targetRef="out_promotion_role">
+                                    <transformation id="pm_promotion_out_role_t">
+                                        <body><![CDATA[{'role': (newRole != null and newRole.trim() != '') ? newRole.trim() : case.file.Employee.value?.role}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <milestone id="pi_promoted_ms" name="Employee promoted">
+                        <entryCriterion id="ec_s_promoted">
+                            <planItemOnPart id="op_s_promoted" sourceRef="pi_promotion">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                    </milestone>
+                    <milestone id="pi_no_change" name="No change">
+                        <entryCriterion id="ec_s_nochange">
+                            <ifPart contextRef="Appraisal">
+                                <condition>
+                                    <body><![CDATA[Appraisal?.outcome == 'meets']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_nochange" sourceRef="pi_finalize">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                    </milestone>
+                </stage>
+            </stage>
+            <stage id="pi_pip" name="Performance improvement plan (PIP)" autoComplete="true">
+                <entryCriterion id="ec_s_pip_work">
+                    <ifPart contextRef="PIP">
+                        <condition>
+                            <body><![CDATA[PIP?.status != 'active']]></body>
+                        </condition>
+                    </ifPart>
+                    <planItemOnPart id="op_s_pip_work" sourceRef="pi_perf_concern">
+                        <standardEvent>occur</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <entryCriterion id="ec_s_pip_appr">
+                    <ifPart contextRef="Appraisal">
+                        <condition>
+                            <body><![CDATA[Appraisal?.outcome == 'poor' and case.file.PIP.value?.status != 'active']]></body>
+                        </condition>
+                    </ifPart>
+                    <planItemOnPart id="op_s_pip_appr" sourceRef="pi_finalize">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <itemControl>
+                    <repetitionRule>
+                        <condition>
+                            <body><![CDATA[true]]></body>
+                        </condition>
+                    </repetitionRule>
+                </itemControl>
+                <stage id="pi_pip_setup" name="Set up PIP" autoComplete="true">
+                    <humanTask id="pi_pip_goals" name="Define PIP goals" isBlocking="true" performerRef="cr__8b8pm_1">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Manager]]></text>
+                        </documentation>
+                        <inputs id="in_pip_goals_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_pip_goals_Appraisal" name="Appraisal" bindingRef="Appraisal"/>
+                        <inputs id="in_pip_goals_ProjectAssignment" name="ProjectAssignment" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_pip_goals_goals" name="PIP.goals" bindingRef="PIP"/>
+                        <outputs id="out_pip_goals_employeeEmail" name="PIP.employeeEmail" bindingRef="PIP"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="DefinePIP.humantask">
+                                <parameterMapping id="pm_pip_goals_in_name" sourceRef="in_pip_goals_Employee" targetRef="name__ec315">
+                                    <transformation id="pm_pip_goals_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_goals_in_email" sourceRef="in_pip_goals_Employee" targetRef="email__6f9dc">
+                                    <transformation id="pm_pip_goals_in_email_t">
+                                        <body><![CDATA[Employee?.email]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_goals_in_outcome" sourceRef="in_pip_goals_Appraisal" targetRef="outcome__cf399">
+                                    <transformation id="pm_pip_goals_in_outcome_t">
+                                        <body><![CDATA[Appraisal?.outcome]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_goals_in_reviewOutcome" sourceRef="in_pip_goals_ProjectAssignment" targetRef="reviewOutcome__83af1">
+                                    <transformation id="pm_pip_goals_in_reviewOutcome_t">
+                                        <body><![CDATA[ProjectAssignment?.reviewOutcome]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_goals_out_goals" sourceRef="goals__b2c37" targetRef="out_pip_goals_goals">
+                                    <transformation id="pm_pip_goals_out_goals_t">
+                                        <body><![CDATA[{'goals':goals,'status':'active','extended':false}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_goals_out_employeeEmail" sourceRef="employeeEmail__d2633" targetRef="out_pip_goals_employeeEmail">
+                                    <transformation id="pm_pip_goals_out_employeeEmail_t">
+                                        <body><![CDATA[{'employeeEmail':employeeEmail}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_pip_revise" name="Revise PIP goals" isBlocking="true" performerRef="cr__8b8pm_1">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Manager. Runs when HR does not approve the PIP; then HR reviews again.]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_pip_revise">
+                            <ifPart contextRef="PIP">
+                                <condition>
+                                    <body><![CDATA[PIP?.hrApproved != true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_pip_revise" sourceRef="pi_pip_approve">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <inputs id="in_pip_revise_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_pip_revise_Appraisal" name="Appraisal" bindingRef="Appraisal"/>
+                        <inputs id="in_pip_revise_ProjectAssignment" name="ProjectAssignment" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_pip_revise_goals" name="PIP.goals" bindingRef="PIP"/>
+                        <outputs id="out_pip_revise_employeeEmail" name="PIP.employeeEmail" bindingRef="PIP"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="DefinePIP.humantask">
+                                <parameterMapping id="pm_pip_revise_in_name" sourceRef="in_pip_revise_Employee" targetRef="name__ec315">
+                                    <transformation id="pm_pip_revise_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_revise_in_email" sourceRef="in_pip_revise_Employee" targetRef="email__6f9dc">
+                                    <transformation id="pm_pip_revise_in_email_t">
+                                        <body><![CDATA[Employee?.email]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_revise_in_outcome" sourceRef="in_pip_revise_Appraisal" targetRef="outcome__cf399">
+                                    <transformation id="pm_pip_revise_in_outcome_t">
+                                        <body><![CDATA[Appraisal?.outcome]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_revise_in_reviewOutcome" sourceRef="in_pip_revise_ProjectAssignment" targetRef="reviewOutcome__83af1">
+                                    <transformation id="pm_pip_revise_in_reviewOutcome_t">
+                                        <body><![CDATA[ProjectAssignment?.reviewOutcome]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_revise_out_goals" sourceRef="goals__b2c37" targetRef="out_pip_revise_goals">
+                                    <transformation id="pm_pip_revise_out_goals_t">
+                                        <body><![CDATA[{'goals':goals,'status':'active'}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_revise_out_employeeEmail" sourceRef="employeeEmail__d2633" targetRef="out_pip_revise_employeeEmail">
+                                    <transformation id="pm_pip_revise_out_employeeEmail_t">
+                                        <body><![CDATA[{'employeeEmail':employeeEmail}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_pip_approve" name="Review and approve PIP" isBlocking="true" performerRef="cr__8b8pm_2">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: HR]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_pipapprove">
+                            <planItemOnPart id="op_s_pipapprove" sourceRef="pi_pip_goals">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_pipapprove_again">
+                            <planItemOnPart id="op_s_pipapprove_again" sourceRef="pi_pip_revise">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_dispute">
+                            <ifPart contextRef="PIP">
+                                <condition>
+                                    <body><![CDATA[PIP?.acknowledged != true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_dispute" sourceRef="pi_acknowledge">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <inputs id="in_pip_approve_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_pip_approve_PIP" name="PIP" bindingRef="PIP"/>
+                        <outputs id="out_pip_approve_goals" name="PIP.goals" bindingRef="PIP"/>
+                        <outputs id="out_pip_approve_noticeText" name="PIP.noticeText" bindingRef="PIP"/>
+                        <outputs id="out_pip_approve_hrApproved" name="PIP.hrApproved" bindingRef="PIP"/>
+                        <outputs id="out_pip_approve_disputeOutcome" name="PIP.disputeOutcome" bindingRef="PIP"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ApprovePIP.humantask">
+                                <parameterMapping id="pm_pip_approve_in_name" sourceRef="in_pip_approve_Employee" targetRef="name__b75f9">
+                                    <transformation id="pm_pip_approve_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_approve_in_goals" sourceRef="in_pip_approve_PIP" targetRef="goals__d3887">
+                                    <transformation id="pm_pip_approve_in_goals_t">
+                                        <body><![CDATA[PIP?.goals]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_approve_in_acknowledged" sourceRef="in_pip_approve_PIP" targetRef="acknowledged__e3c05">
+                                    <transformation id="pm_pip_approve_in_acknowledged_t">
+                                        <body><![CDATA[PIP?.acknowledged]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_approve_out_goals" sourceRef="goals__89638" targetRef="out_pip_approve_goals">
+                                    <transformation id="pm_pip_approve_out_goals_t">
+                                        <body><![CDATA[{'goals':goals}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_approve_out_noticeText" sourceRef="noticeText__36c51" targetRef="out_pip_approve_noticeText">
+                                    <transformation id="pm_pip_approve_out_noticeText_t">
+                                        <body><![CDATA[{'noticeText':noticeText}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_approve_out_hrApproved" sourceRef="hrApproved__09e22" targetRef="out_pip_approve_hrApproved">
+                                    <transformation id="pm_pip_approve_out_hrApproved_t">
+                                        <body><![CDATA[{'hrApproved':hrApproved}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_pip_approve_out_disputeOutcome" sourceRef="disputeOutcome__a08ef" targetRef="out_pip_approve_disputeOutcome">
+                                    <transformation id="pm_pip_approve_out_disputeOutcome_t">
+                                        <body><![CDATA[{'disputeOutcome':disputeOutcome}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <processTask id="pi_issue_notice" name="Send PIP notice" isBlocking="true" processRef="SendPIPNotice.process">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[System task: Mail service]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_notice">
+                            <ifPart contextRef="PIP">
+                                <condition>
+                                    <body><![CDATA[PIP?.hrApproved == true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_notice" sourceRef="pi_pip_approve">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <inputs id="in_issue_notice_PIP" name="PIP" bindingRef="PIP"/>
+                        <parameterMapping id="pm_issue_notice_in_employeeEmail" sourceRef="in_issue_notice_PIP" targetRef="employeeEmail__eed4b">
+                            <transformation id="pm_issue_notice_in_employeeEmail_t">
+                                <body><![CDATA[PIP?.employeeEmail]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_issue_notice_in_noticeText" sourceRef="in_issue_notice_PIP" targetRef="noticeText__d8013">
+                            <transformation id="pm_issue_notice_in_noticeText_t">
+                                <body><![CDATA[PIP?.noticeText]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_issue_notice_in_goals" sourceRef="in_issue_notice_PIP" targetRef="goals__9bedf">
+                            <transformation id="pm_issue_notice_in_goals_t">
+                                <body><![CDATA[PIP?.goals]]></body>
+                            </transformation>
+                        </parameterMapping>
+                    </processTask>
+                    <humanTask id="pi_acknowledge" name="Acknowledge PIP" isBlocking="true" performerRef="cr__8b8pm_0">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Employee]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_ack">
+                            <planItemOnPart id="op_s_ack" sourceRef="pi_issue_notice">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <inputs id="in_acknowledge_PIP" name="PIP" bindingRef="PIP"/>
+                        <outputs id="out_acknowledge_acknowledged" name="PIP.acknowledged" bindingRef="PIP"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="AcknowledgePIP.humantask">
+                                <parameterMapping id="pm_acknowledge_in_goals" sourceRef="in_acknowledge_PIP" targetRef="goals__f2535">
+                                    <transformation id="pm_acknowledge_in_goals_t">
+                                        <body><![CDATA[PIP?.goals]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_acknowledge_in_noticeText" sourceRef="in_acknowledge_PIP" targetRef="noticeText__f39fd">
+                                    <transformation id="pm_acknowledge_in_noticeText_t">
+                                        <body><![CDATA[PIP?.noticeText]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_acknowledge_in_disputeOutcome" sourceRef="in_acknowledge_PIP" targetRef="disputeOutcome__ac3d1">
+                                    <transformation id="pm_acknowledge_in_disputeOutcome_t">
+                                        <body><![CDATA[PIP?.disputeOutcome]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_acknowledge_out_acknowledged" sourceRef="acknowledged__39233" targetRef="out_acknowledge_acknowledged">
+                                    <transformation id="pm_acknowledge_out_acknowledged_t">
+                                        <body><![CDATA[{'acknowledged':acknowledged}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <milestone id="pi_pip_active" name="PIP active">
+                        <entryCriterion id="ec_s_pipactive">
+                            <ifPart contextRef="PIP">
+                                <condition>
+                                    <body><![CDATA[PIP?.acknowledged == true]]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_pipactive" sourceRef="pi_acknowledge">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                    </milestone>
+                </stage>
+                <stage id="pi_pip_execute" name="Execute and review" autoComplete="true">
+                    <entryCriterion id="ec_s_execute">
+                        <planItemOnPart id="op_s_execute" sourceRef="pi_pip_active">
+                            <standardEvent>occur</standardEvent>
+                        </planItemOnPart>
+                    </entryCriterion>
+                    <exitCriterion id="xc_x_execute">
+                        <planItemOnPart id="op_x_execute" sourceRef="pi_pip_passed">
+                            <standardEvent>occur</standardEvent>
+                        </planItemOnPart>
+                    </exitCriterion>
+                    <humanTask id="pi_improve" name="Work on improvement plan" isBlocking="true" performerRef="cr__8b8pm_0">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Employee]]></text>
+                        </documentation>
+                        <inputs id="in_improve_PIP" name="PIP" bindingRef="PIP"/>
+                        <outputs id="out_improve_status" name="PIP.status" bindingRef="PIP"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="WorkOnPIP.humantask">
+                                <parameterMapping id="pm_improve_in_goals" sourceRef="in_improve_PIP" targetRef="goals__c9d7d">
+                                    <transformation id="pm_improve_in_goals_t">
+                                        <body><![CDATA[PIP?.goals]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_improve_in_status" sourceRef="in_improve_PIP" targetRef="status__2fd0e">
+                                    <transformation id="pm_improve_in_status_t">
+                                        <body><![CDATA[PIP?.progress]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_improve_out_status" sourceRef="status__17fcf" targetRef="out_improve_status">
+                                    <transformation id="pm_improve_out_status_t">
+                                        <body><![CDATA[{'progress':status}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <stage id="pi_checkin_round" name="Check-in round" autoComplete="true">
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <timerEvent id="pi_checkin_timer" name="Check-in due">
+                            <timerExpression>
+                                <body><![CDATA[P14D]]></body>
+                            </timerExpression>
+                            <planItemStartTrigger id="tr_checkin_timer"/>
+                        </timerEvent>
+                        <humanTask id="pi_checkin_review" name="Check-in review" isBlocking="true" performerRef="cr__8b8pm_1">
+                            <documentation textFormat="text/plain">
+                                <text><![CDATA[Owner: Manager]]></text>
+                            </documentation>
+                            <entryCriterion id="ec_s_checkin">
+                                <planItemOnPart id="op_s_checkin" sourceRef="pi_checkin_timer">
+                                    <standardEvent>occur</standardEvent>
+                                </planItemOnPart>
+                            </entryCriterion>
+                            <itemControl>
+                                <requiredRule>
+                                    <condition>
+                                        <body><![CDATA[true]]></body>
+                                    </condition>
+                                </requiredRule>
+                            </itemControl>
+                            <inputs id="in_checkin_review_PIP" name="PIP" bindingRef="PIP"/>
+                            <outputs id="out_checkin_review_status" name="PIP.status" bindingRef="PIP"/>
+                            <extensionElements mustUnderstand="false">
+                                <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="CheckInReview.humantask">
+                                    <parameterMapping id="pm_checkin_review_in_goals" sourceRef="in_checkin_review_PIP" targetRef="goals__a3e14">
+                                        <transformation id="pm_checkin_review_in_goals_t">
+                                            <body><![CDATA[PIP?.goals]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_checkin_review_in_status" sourceRef="in_checkin_review_PIP" targetRef="status__58233">
+                                        <transformation id="pm_checkin_review_in_status_t">
+                                            <body><![CDATA[PIP?.progress]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                    <parameterMapping id="pm_checkin_review_out_status" sourceRef="status__b8914" targetRef="out_checkin_review_status">
+                                        <transformation id="pm_checkin_review_out_status_t">
+                                            <body><![CDATA[{'progress':status}]]></body>
+                                        </transformation>
+                                    </parameterMapping>
+                                </cafienne:implementation>
+                            </extensionElements>
+                        </humanTask>
+                    </stage>
+                    <timerEvent id="pi_deadline_timer" name="PIP deadline">
+                        <timerExpression>
+                            <body><![CDATA[P90D]]></body>
+                        </timerExpression>
+                        <planItemStartTrigger id="tr_deadline_timer"/>
+                    </timerEvent>
+                    <humanTask id="pi_final_pip_review" name="Final PIP review" isBlocking="true" performerRef="cr__8b8pm_2">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: HR]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_fpr">
+                            <planItemOnPart id="op_s_fpr" sourceRef="pi_deadline_timer">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <entryCriterion id="ec_s_fpr_again">
+                            <planItemOnPart id="op_s_fpr_again" sourceRef="pi_pip_ext_timer">
+                                <standardEvent>occur</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <itemControl>
+                            <repetitionRule>
+                                <condition>
+                                    <body><![CDATA[true]]></body>
+                                </condition>
+                            </repetitionRule>
+                        </itemControl>
+                        <inputs id="in_final_pip_review_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_final_pip_review_PIP" name="PIP" bindingRef="PIP"/>
+                        <outputs id="out_final_pip_review_result" name="PIP.result" bindingRef="PIP"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="FinalPIPReview.humantask">
+                                <parameterMapping id="pm_final_pip_review_in_name" sourceRef="in_final_pip_review_Employee" targetRef="name__f1ca4">
+                                    <transformation id="pm_final_pip_review_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_final_pip_review_in_goals" sourceRef="in_final_pip_review_PIP" targetRef="goals__80c61">
+                                    <transformation id="pm_final_pip_review_in_goals_t">
+                                        <body><![CDATA[PIP?.goals]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_final_pip_review_in_status" sourceRef="in_final_pip_review_PIP" targetRef="status__4e149">
+                                    <transformation id="pm_final_pip_review_in_status_t">
+                                        <body><![CDATA[PIP?.progress]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_final_pip_review_out_result" sourceRef="result__294c8" targetRef="out_final_pip_review_result">
+                                    <transformation id="pm_final_pip_review_out_result_t">
+                                        <body><![CDATA[{'result': (result == 'extend' and case.file.PIP.value?.extended == true) ? 'notMet' : result, 'extended': result == 'extend' or case.file.PIP.value?.extended == true, 'status': (result == 'extend' and case.file.PIP.value?.extended != true) ? 'active' : 'closed'}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <timerEvent id="pi_pip_ext_timer" name="Extension period">
+                        <timerExpression>
+                            <body><![CDATA[P30D]]></body>
+                        </timerExpression>
+                        <planItemStartTrigger id="tr_pip_ext_timer" sourceRef="pi_final_pip_review">
+                            <standardEvent>complete</standardEvent>
+                        </planItemStartTrigger>
+                    </timerEvent>
+                    <milestone id="pi_pip_passed" name="PIP passed">
+                        <entryCriterion id="ec_s_ppassed">
+                            <ifPart contextRef="PIP">
+                                <condition>
+                                    <body><![CDATA[PIP?.result == 'passed']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_ppassed" sourceRef="pi_final_pip_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                    </milestone>
+                    <milestone id="pi_pip_not_met" name="PIP not met">
+                        <entryCriterion id="ec_s_pnotmet">
+                            <ifPart contextRef="PIP">
+                                <condition>
+                                    <body><![CDATA[PIP?.result == 'notMet']]></body>
+                                </condition>
+                            </ifPart>
+                            <planItemOnPart id="op_s_pnotmet" sourceRef="pi_final_pip_review">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                    </milestone>
+                </stage>
+            </stage>
+        </stage>
+        <userEvent id="pi_exit_requested" name="Exit requested" authorizedRoleRefs="cr__8b8pm_2 cr__8b8pm_0">
+            <documentation textFormat="text/plain">
+                <text><![CDATA[Raised by HR or the Employee.]]></text>
+            </documentation>
+        </userEvent>
+        <stage id="pi_stage3" name="Offboarding" autoComplete="true">
+            <entryCriterion id="ec_s_stage3_a">
+                <planItemOnPart id="op_s_stage3_a" sourceRef="pi_stage2">
+                    <standardEvent>exit</standardEvent>
+                </planItemOnPart>
+            </entryCriterion>
+            <entryCriterion id="ec_s_stage3_b">
+                <planItemOnPart id="op_s_stage3_b" sourceRef="pi_stage1">
+                    <standardEvent>exit</standardEvent>
+                </planItemOnPart>
+            </entryCriterion>
+            <humanTask id="pi_initiate_exit" name="Initiate exit and notice" isBlocking="true" performerRef="cr__8b8pm_2">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[Owner: HR / Manager]]></text>
+                </documentation>
+                <inputs id="in_initiate_exit_Employee" name="Employee" bindingRef="Employee"/>
+                <outputs id="out_initiate_exit_reason" name="Exit.reason" bindingRef="Exit"/>
+                <outputs id="out_initiate_exit_lastWorkingDay" name="Exit.lastWorkingDay" bindingRef="Exit"/>
+                <extensionElements mustUnderstand="false">
+                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="InitiateExit.humantask">
+                        <parameterMapping id="pm_initiate_exit_in_name" sourceRef="in_initiate_exit_Employee" targetRef="name__d38f5">
+                            <transformation id="pm_initiate_exit_in_name_t">
+                                <body><![CDATA[Employee?.name]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_initiate_exit_in_employeeId" sourceRef="in_initiate_exit_Employee" targetRef="employeeId__3db5f">
+                            <transformation id="pm_initiate_exit_in_employeeId_t">
+                                <body><![CDATA[Employee?.employeeId]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_initiate_exit_in_role" sourceRef="in_initiate_exit_Employee" targetRef="role__81a64">
+                            <transformation id="pm_initiate_exit_in_role_t">
+                                <body><![CDATA[Employee?.role]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_initiate_exit_in_manager" sourceRef="in_initiate_exit_Employee" targetRef="manager__e1588">
+                            <transformation id="pm_initiate_exit_in_manager_t">
+                                <body><![CDATA[Employee?.manager]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_initiate_exit_out_reason" sourceRef="reason__6e8c1" targetRef="out_initiate_exit_reason">
+                            <transformation id="pm_initiate_exit_out_reason_t">
+                                <body><![CDATA[{'reason':reason}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_initiate_exit_out_lastWorkingDay" sourceRef="lastWorkingDay__c1ff1" targetRef="out_initiate_exit_lastWorkingDay">
+                            <transformation id="pm_initiate_exit_out_lastWorkingDay_t">
+                                <body><![CDATA[{'lastWorkingDay':lastWorkingDay}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                    </cafienne:implementation>
+                </extensionElements>
+            </humanTask>
+            <humanTask id="pi_return_assets" name="Return assets" isBlocking="true" performerRef="cr__8b8pm_0">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[Owner: Employee]]></text>
+                </documentation>
+                <entryCriterion id="ec_s_return">
+                    <planItemOnPart id="op_s_return" sourceRef="pi_initiate_exit">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <inputs id="in_return_assets_Employee" name="Employee" bindingRef="Employee"/>
+                <inputs id="in_return_assets_Exit" name="Exit" bindingRef="Exit"/>
+                <extensionElements mustUnderstand="false">
+                    <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="ReturnAssets.humantask">
+                        <parameterMapping id="pm_return_assets_in_name" sourceRef="in_return_assets_Employee" targetRef="name__35177">
+                            <transformation id="pm_return_assets_in_name_t">
+                                <body><![CDATA[Employee?.name]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_return_assets_in_lastWorkingDay" sourceRef="in_return_assets_Exit" targetRef="lastWorkingDay__71873">
+                            <transformation id="pm_return_assets_in_lastWorkingDay_t">
+                                <body><![CDATA[Exit?.lastWorkingDay]]></body>
+                            </transformation>
+                        </parameterMapping>
+                    </cafienne:implementation>
+                </extensionElements>
+            </humanTask>
+            <processTask id="pi_revoke_access" name="Revoke access" isBlocking="true" processRef="RevokeAccess.process">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[System task: Identity system]]></text>
+                </documentation>
+                <entryCriterion id="ec_s_revoke">
+                    <planItemOnPart id="op_s_revoke" sourceRef="pi_initiate_exit">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <inputs id="in_revoke_access_Employee" name="Employee" bindingRef="Employee"/>
+                <inputs id="in_revoke_access_Exit" name="Exit" bindingRef="Exit"/>
+                <parameterMapping id="pm_revoke_access_in_employeeId" sourceRef="in_revoke_access_Employee" targetRef="employeeId__48052">
+                    <transformation id="pm_revoke_access_in_employeeId_t">
+                        <body><![CDATA[Employee?.employeeId]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_revoke_access_in_email" sourceRef="in_revoke_access_Employee" targetRef="email__d15e6">
+                    <transformation id="pm_revoke_access_in_email_t">
+                        <body><![CDATA[Employee?.email]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_revoke_access_in_lastWorkingDay" sourceRef="in_revoke_access_Exit" targetRef="lastWorkingDay__fd2e6">
+                    <transformation id="pm_revoke_access_in_lastWorkingDay_t">
+                        <body><![CDATA[Exit?.lastWorkingDay]]></body>
+                    </transformation>
+                </parameterMapping>
+            </processTask>
+            <processTask id="pi_final_records" name="Archive employee records" isBlocking="true" processRef="ArchiveRecords.process">
+                <documentation textFormat="text/plain">
+                    <text><![CDATA[System task: HR system]]></text>
+                </documentation>
+                <entryCriterion id="ec_s_archive">
+                    <planItemOnPart id="op_s_archive_0" sourceRef="pi_return_assets">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                    <planItemOnPart id="op_s_archive_1" sourceRef="pi_revoke_access">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+                <inputs id="in_final_records_Employee" name="Employee" bindingRef="Employee"/>
+                <inputs id="in_final_records_Exit" name="Exit" bindingRef="Exit"/>
+                <parameterMapping id="pm_final_records_in_employeeId" sourceRef="in_final_records_Employee" targetRef="employeeId__b29f0">
+                    <transformation id="pm_final_records_in_employeeId_t">
+                        <body><![CDATA[Employee?.employeeId]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_final_records_in_name" sourceRef="in_final_records_Employee" targetRef="name__fec3a">
+                    <transformation id="pm_final_records_in_name_t">
+                        <body><![CDATA[Employee?.name]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_final_records_in_reason" sourceRef="in_final_records_Exit" targetRef="reason__d1dbe">
+                    <transformation id="pm_final_records_in_reason_t">
+                        <body><![CDATA[Exit?.reason]]></body>
+                    </transformation>
+                </parameterMapping>
+            </processTask>
+            <milestone id="pi_case_completed" name="Case completed">
+                <entryCriterion id="ec_s_completed">
+                    <planItemOnPart id="op_s_completed" sourceRef="pi_final_records">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </entryCriterion>
+            </milestone>
+        </stage>
+    </casePlanModel>
+    <caseRoles caseTeamRef="emp.caseteam"/>
+</case>

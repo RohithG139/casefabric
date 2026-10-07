@@ -1,0 +1,72 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="ApprovePIP" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__b75f9" name="name" typeRef="string"/>
+        <input id="goals__d3887" name="goals" typeRef="string"/>
+        <input id="acknowledged__e3c05" name="acknowledged" typeRef="boolean"/>
+        <output id="goals__89638" name="goals" typeRef="string"/>
+        <output id="noticeText__36c51" name="noticeText" typeRef="string"/>
+        <output id="hrApproved__09e22" name="hrApproved" typeRef="boolean"/>
+        <output id="disputeOutcome__a08ef" name="disputeOutcome" typeRef="string"/>
+        <task-model>{
+  "schema": {
+    "title": "Review &amp; approve PIP",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "goals": {
+        "type": "string",
+        "title": "PIP goals"
+      },
+      "acknowledged": {
+        "type": "boolean",
+        "title": "I acknowledge the PIP (untick to dispute)",
+        "readOnly": true
+      },
+      "noticeText": {
+        "type": "string",
+        "title": "PIP notice text"
+      },
+      "hrApproved": {
+        "type": "boolean",
+        "title": "Approved by HR (No sends the goals back to the manager)",
+        "default": false
+      },
+      "disputeOutcome": {
+        "type": "string",
+        "title": "HR response to dispute (shown to the employee)"
+      }
+    },
+    "required": [
+      "hrApproved",
+      "noticeText"
+    ]
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "goals",
+      "acknowledged",
+      "noticeText",
+      "hrApproved",
+      "disputeOutcome"
+    ],
+    "goals": {
+      "ui:widget": "textarea"
+    },
+    "noticeText": {
+      "ui:widget": "textarea"
+    },
+    "disputeOutcome": {
+      "ui:widget": "textarea"
+    },
+    "hrApproved": {
+      "ui:widget": "radio"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>
