@@ -1,0 +1,20 @@
+<definitions xmlns="https://www.omg.org/spec/DMN/20240513/MODEL/" xmlns:cafienne="org.cafienne" name="DecisionTask_0" namespace="http://casefabric.com/decisionmodeler/defaultnamespace">
+    <inputData id="_WUT4V_7" name="New_Input">
+        <variable id="_WUT4V_6" name="New_Input" typeRef="string"/>
+    </inputData>
+    <decision id="_WUT4V_1" name="DecisionTask_0">
+        <variable id="_WUT4V_0" name="DecisionTask_0"/>
+        <informationRequirement>
+            <requiredInput href="#_WUT4V_7"/>
+        </informationRequirement>
+        <decisionTable id="_WUT4V_2" hitPolicy="UNIQUE">
+            <input id="_WUT4V_4" label="Input 1">
+                <inputExpression id="_WUT4V_3" typeRef="string">
+                    <text/>
+                </inputExpression>
+            </input>
+            <output id="_WUT4V_5" name="Output 1" typeRef="string"/>
+            <annotation name="Annotations"/>
+        </decisionTable>
+    </decision>
+</definitions>

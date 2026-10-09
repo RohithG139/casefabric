@@ -1,0 +1,47 @@
+<humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
+    <cafienne:implementation name="BenchReview" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
+        <input id="name__br001" name="name" typeRef="string"/>
+        <input id="role__br002" name="role" typeRef="string"/>
+        <input id="benchNotes__br003" name="benchNotes" typeRef="string"/>
+        <output id="skillGap__br004" name="skillGap" typeRef="boolean"/>
+        <task-model>{
+  "schema": {
+    "title": "Bench review",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Full name",
+        "readOnly": true
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "readOnly": true
+      },
+      "benchNotes": {
+        "type": "string",
+        "title": "Employee's bench update",
+        "readOnly": true
+      },
+      "skillGap": {
+        "type": "boolean",
+        "title": "Skill gap identified (starts a development plan)",
+        "default": false
+      }
+    }
+  },
+  "uiSchema": {
+    "ui:order": [
+      "name",
+      "role",
+      "benchNotes",
+      "skillGap"
+    ],
+    "benchNotes": {
+      "ui:widget": "textarea"
+    }
+  }
+}</task-model>
+    </cafienne:implementation>
+</humanTask>

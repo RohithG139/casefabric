@@ -28,181 +28,184 @@
             <Bounds x="810" y="315" width="220" height="60"/>
         </CMMNShape>
         <CMMNShape name="Active employment" cmmnElementRef="pi_stage2">
-            <Bounds x="60" y="420" width="1380" height="1328"/>
+            <Bounds x="40" y="510" width="1380" height="1328"/>
         </CMMNShape>
         <CMMNShape name="Work cycle" cmmnElementRef="pi_work_cycle">
-            <Bounds x="90" y="495" width="330" height="790"/>
+            <Bounds x="70" y="585" width="330" height="790"/>
         </CMMNShape>
         <CMMNShape name="Development plan cycle" cmmnElementRef="pi_dev_cycle">
-            <Bounds x="450" y="495" width="600" height="790"/>
+            <Bounds x="430" y="585" width="600" height="790"/>
         </CMMNShape>
         <CMMNShape name="Appraisal cycle" cmmnElementRef="pi_appraisal_cycle">
-            <Bounds x="1080" y="495" width="330" height="790"/>
+            <Bounds x="1060" y="585" width="330" height="790"/>
         </CMMNShape>
         <CMMNShape name="Project round" cmmnElementRef="pi_project_round">
-            <Bounds x="105" y="540" width="300" height="608"/>
+            <Bounds x="85" y="630" width="300" height="608"/>
         </CMMNShape>
         <CMMNShape name="Check project status" cmmnElementRef="pi_check_status">
-            <Bounds x="125" y="580" width="260" height="60"/>
+            <Bounds x="105" y="670" width="260" height="60"/>
         </CMMNShape>
         <CMMNShape name="Stay on bench" cmmnElementRef="pi_bench">
-            <Bounds x="125" y="680" width="120" height="70"/>
+            <Bounds x="105" y="770" width="120" height="70"/>
+        </CMMNShape>
+        <CMMNShape name="Bench review" cmmnElementRef="pi_bench_review">
+            <Bounds x="105" y="865" width="120" height="55"/>
         </CMMNShape>
         <CMMNShape name="Assign project" cmmnElementRef="pi_assign_project">
-            <Bounds x="265" y="680" width="120" height="70"/>
+            <Bounds x="245" y="770" width="120" height="70"/>
         </CMMNShape>
         <CMMNShape name="Recheck after a week" cmmnElementRef="pi_bench_timer">
-            <Bounds x="169" y="774" width="32" height="32"/>
+            <Bounds x="235" y="872" width="32" height="32"/>
         </CMMNShape>
         <CMMNShape name="Perform project work" cmmnElementRef="pi_perform_work">
-            <Bounds x="125" y="855" width="260" height="60"/>
+            <Bounds x="105" y="945" width="260" height="60"/>
         </CMMNShape>
         <CMMNShape name="Project and performance review" cmmnElementRef="pi_project_review">
-            <Bounds x="130" y="960" width="260" height="60"/>
+            <Bounds x="110" y="1050" width="260" height="60"/>
         </CMMNShape>
         <CMMNShape name="Project delivered" cmmnElementRef="pi_project_delivered">
-            <Bounds x="125" y="1055" width="125" height="65"/>
+            <Bounds x="105" y="1145" width="125" height="65"/>
         </CMMNShape>
         <CMMNShape name="Performance concern" cmmnElementRef="pi_perf_concern">
-            <Bounds x="260" y="1055" width="125" height="65"/>
+            <Bounds x="240" y="1145" width="125" height="65"/>
         </CMMNShape>
         <CMMNShape name="Development plan" cmmnElementRef="pi_dev_plan">
-            <Bounds x="465" y="535" width="570" height="730"/>
+            <Bounds x="445" y="625" width="570" height="730"/>
         </CMMNShape>
         <CMMNShape name="Start development plan" cmmnElementRef="pi_start_dev">
-            <Bounds x="684" y="564" width="32" height="32"/>
+            <Bounds x="664" y="654" width="32" height="32"/>
         </CMMNShape>
         <CMMNShape name="Plan" cmmnElementRef="pi_plan">
-            <Bounds x="480" y="615" width="540" height="190"/>
+            <Bounds x="460" y="705" width="540" height="190"/>
         </CMMNShape>
         <CMMNShape name="Define goals and plan" cmmnElementRef="pi_define_plan">
-            <Bounds x="510" y="660" width="220" height="60"/>
+            <Bounds x="490" y="750" width="220" height="60"/>
         </CMMNShape>
         <CMMNShape name="Approve plan" cmmnElementRef="pi_approve_plan">
-            <Bounds x="770" y="660" width="220" height="60"/>
+            <Bounds x="750" y="750" width="220" height="60"/>
         </CMMNShape>
         <CMMNShape name="Revise plan" cmmnElementRef="pi_revise_plan">
-            <Bounds x="510" y="745" width="220" height="45"/>
+            <Bounds x="490" y="835" width="220" height="45"/>
         </CMMNShape>
         <CMMNShape name="Plan approved" cmmnElementRef="pi_plan_approved">
-            <Bounds x="770" y="745" width="220" height="45"/>
+            <Bounds x="750" y="835" width="220" height="45"/>
         </CMMNShape>
         <CMMNShape name="Perform plan" cmmnElementRef="pi_perform">
-            <Bounds x="480" y="835" width="400" height="250"/>
+            <Bounds x="460" y="925" width="400" height="250"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="pt_perform">
-            <Bounds x="530" y="826" width="24" height="16"/>
+            <Bounds x="510" y="916" width="24" height="16"/>
         </CMMNShape>
         <CMMNShape name="Projects and assignments" cmmnElementRef="pi_act_projects">
-            <Bounds x="510" y="875" width="110" height="60"/>
+            <Bounds x="490" y="965" width="110" height="60"/>
         </CMMNShape>
         <CMMNShape name="Training and learning" cmmnElementRef="pi_act_training">
-            <Bounds x="635" y="875" width="110" height="60"/>
+            <Bounds x="615" y="965" width="110" height="60"/>
         </CMMNShape>
         <CMMNShape name="Coaching and mentoring" cmmnElementRef="pi_act_coaching">
-            <Bounds x="760" y="875" width="110" height="60"/>
+            <Bounds x="740" y="965" width="110" height="60"/>
         </CMMNShape>
         <CMMNShape name="Progress check" cmmnElementRef="pi_progress_round">
-            <Bounds x="510" y="945" width="340" height="115"/>
+            <Bounds x="490" y="1035" width="340" height="115"/>
         </CMMNShape>
         <CMMNShape name="Progress check due" cmmnElementRef="pi_progress_timer">
-            <Bounds x="529" y="999" width="32" height="32"/>
+            <Bounds x="509" y="1089" width="32" height="32"/>
         </CMMNShape>
         <CMMNShape name="Review progress" cmmnElementRef="pi_progress_review">
-            <Bounds x="590" y="990" width="245" height="50"/>
+            <Bounds x="570" y="1080" width="245" height="50"/>
         </CMMNShape>
         <CMMNShape name="Plan performed" cmmnElementRef="pi_plan_performed">
-            <Bounds x="895" y="987" width="125" height="55"/>
+            <Bounds x="875" y="1077" width="125" height="55"/>
         </CMMNShape>
         <CMMNShape name="Evaluate plan" cmmnElementRef="pi_evaluate_st">
-            <Bounds x="480" y="1105" width="540" height="140"/>
+            <Bounds x="460" y="1195" width="540" height="140"/>
         </CMMNShape>
         <CMMNShape name="Evaluate and document results" cmmnElementRef="pi_evaluate">
-            <Bounds x="510" y="1145" width="220" height="60"/>
+            <Bounds x="490" y="1235" width="220" height="60"/>
         </CMMNShape>
         <CMMNShape name="Plan closed" cmmnElementRef="pi_plan_closed">
-            <Bounds x="770" y="1145" width="220" height="60"/>
+            <Bounds x="750" y="1235" width="220" height="60"/>
         </CMMNShape>
         <CMMNShape name="Appraisal round" cmmnElementRef="pi_appraisal_round">
-            <Bounds x="1095" y="535" width="300" height="550"/>
+            <Bounds x="1075" y="625" width="300" height="550"/>
         </CMMNShape>
         <CMMNShape name="Appraisal due" cmmnElementRef="pi_appraisal_timer">
-            <Bounds x="1229" y="579" width="32" height="32"/>
+            <Bounds x="1209" y="669" width="32" height="32"/>
         </CMMNShape>
         <CMMNShape name="Self review" cmmnElementRef="pi_self_review">
-            <Bounds x="1105" y="655" width="90" height="70"/>
+            <Bounds x="1085" y="745" width="90" height="70"/>
         </CMMNShape>
         <CMMNShape name="Manager review" cmmnElementRef="pi_manager_review">
-            <Bounds x="1202" y="655" width="92" height="70"/>
+            <Bounds x="1182" y="745" width="92" height="70"/>
         </CMMNShape>
         <CMMNShape name="Client review" cmmnElementRef="pi_client_review">
-            <Bounds x="1302" y="655" width="88" height="70"/>
+            <Bounds x="1282" y="745" width="88" height="70"/>
         </CMMNShape>
         <CMMNShape name="Consolidate and finalize appraisal" cmmnElementRef="pi_finalize">
-            <Bounds x="1115" y="785" width="270" height="60"/>
+            <Bounds x="1095" y="875" width="270" height="60"/>
         </CMMNShape>
         <CMMNShape name="Process promotion" cmmnElementRef="pi_promotion">
-            <Bounds x="1105" y="910" width="125" height="65"/>
+            <Bounds x="1085" y="1000" width="125" height="65"/>
         </CMMNShape>
         <CMMNShape name="Employee promoted" cmmnElementRef="pi_promoted_ms">
-            <Bounds x="1105" y="1005" width="125" height="55"/>
+            <Bounds x="1085" y="1095" width="125" height="55"/>
         </CMMNShape>
         <CMMNShape name="No change" cmmnElementRef="pi_no_change">
-            <Bounds x="1255" y="910" width="125" height="65"/>
+            <Bounds x="1235" y="1000" width="125" height="65"/>
         </CMMNShape>
         <CMMNShape name="Performance improvement plan (PIP)" cmmnElementRef="pi_pip">
-            <Bounds x="90" y="1315" width="1320" height="408"/>
+            <Bounds x="70" y="1405" width="1320" height="408"/>
         </CMMNShape>
         <CMMNShape name="Set up PIP" cmmnElementRef="pi_pip_setup">
-            <Bounds x="120" y="1370" width="1260" height="140"/>
+            <Bounds x="100" y="1460" width="1260" height="140"/>
         </CMMNShape>
         <CMMNShape name="Define PIP goals" cmmnElementRef="pi_pip_goals">
-            <Bounds x="140" y="1390" width="200" height="50"/>
+            <Bounds x="120" y="1480" width="200" height="50"/>
         </CMMNShape>
         <CMMNShape name="Revise PIP goals" cmmnElementRef="pi_pip_revise">
-            <Bounds x="140" y="1450" width="200" height="50"/>
+            <Bounds x="120" y="1540" width="200" height="50"/>
         </CMMNShape>
         <CMMNShape name="Review and approve PIP" cmmnElementRef="pi_pip_approve">
-            <Bounds x="390" y="1415" width="200" height="60"/>
+            <Bounds x="370" y="1505" width="200" height="60"/>
         </CMMNShape>
         <CMMNShape name="Send PIP notice" cmmnElementRef="pi_issue_notice">
-            <Bounds x="640" y="1415" width="200" height="60"/>
+            <Bounds x="620" y="1505" width="200" height="60"/>
         </CMMNShape>
         <CMMNShape name="Acknowledge PIP" cmmnElementRef="pi_acknowledge">
-            <Bounds x="890" y="1415" width="200" height="60"/>
+            <Bounds x="870" y="1505" width="200" height="60"/>
         </CMMNShape>
         <CMMNShape name="PIP active" cmmnElementRef="pi_pip_active">
-            <Bounds x="1140" y="1420" width="220" height="50"/>
+            <Bounds x="1120" y="1510" width="220" height="50"/>
         </CMMNShape>
         <CMMNShape name="Execute and review" cmmnElementRef="pi_pip_execute">
-            <Bounds x="120" y="1535" width="1260" height="175"/>
+            <Bounds x="100" y="1625" width="1260" height="175"/>
         </CMMNShape>
         <CMMNShape name="Work on improvement plan" cmmnElementRef="pi_improve">
-            <Bounds x="140" y="1580" width="220" height="60"/>
+            <Bounds x="120" y="1670" width="220" height="60"/>
         </CMMNShape>
         <CMMNShape name="Check-in round" cmmnElementRef="pi_checkin_round">
-            <Bounds x="390" y="1565" width="310" height="105"/>
+            <Bounds x="370" y="1655" width="310" height="105"/>
         </CMMNShape>
         <CMMNShape name="Check-in due" cmmnElementRef="pi_checkin_timer">
-            <Bounds x="412" y="1607" width="32" height="32"/>
+            <Bounds x="392" y="1697" width="32" height="32"/>
         </CMMNShape>
         <CMMNShape name="Check-in review" cmmnElementRef="pi_checkin_review">
-            <Bounds x="470" y="1593" width="210" height="60"/>
+            <Bounds x="450" y="1683" width="210" height="60"/>
         </CMMNShape>
         <CMMNShape name="PIP deadline" cmmnElementRef="pi_deadline_timer">
-            <Bounds x="734" y="1597" width="32" height="32"/>
+            <Bounds x="714" y="1687" width="32" height="32"/>
         </CMMNShape>
         <CMMNShape name="Final PIP review" cmmnElementRef="pi_final_pip_review">
-            <Bounds x="790" y="1583" width="200" height="60"/>
+            <Bounds x="770" y="1673" width="200" height="60"/>
         </CMMNShape>
         <CMMNShape name="Extension period" cmmnElementRef="pi_pip_ext_timer">
-            <Bounds x="874" y="1667" width="32" height="32"/>
+            <Bounds x="854" y="1757" width="32" height="32"/>
         </CMMNShape>
         <CMMNShape name="PIP passed" cmmnElementRef="pi_pip_passed">
-            <Bounds x="1050" y="1567" width="150" height="40"/>
+            <Bounds x="1030" y="1657" width="150" height="40"/>
         </CMMNShape>
         <CMMNShape name="PIP not met" cmmnElementRef="pi_pip_not_met">
-            <Bounds x="1050" y="1617" width="150" height="40"/>
+            <Bounds x="1030" y="1707" width="150" height="40"/>
         </CMMNShape>
         <CMMNShape name="Offboarding" cmmnElementRef="pi_stage3">
             <Bounds x="60" y="1772" width="1380" height="188"/>
@@ -244,157 +247,160 @@
             <Bounds x="1434" y="275" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_stage2">
-            <Bounds x="1089" y="410" width="12" height="20"/>
+            <Bounds x="1069" y="500" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="xc_x_s2_exit">
-            <Bounds x="1434" y="437" width="12" height="20"/>
+            <Bounds x="1414" y="527" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="xc_x_s2_pip">
-            <Bounds x="1434" y="465" width="12" height="20"/>
+            <Bounds x="1414" y="555" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_bench">
-            <Bounds x="179" y="670" width="12" height="20"/>
+            <Bounds x="159" y="760" width="12" height="20"/>
+        </CMMNShape>
+        <CMMNShape cmmnElementRef="ec_s_bench_review">
+            <Bounds x="159" y="855" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_assignp">
-            <Bounds x="319" y="670" width="12" height="20"/>
+            <Bounds x="299" y="760" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="xc_x_round_bench">
-            <Bounds x="99" y="780" width="12" height="20"/>
+            <Bounds x="79" y="870" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_assign_again">
-            <Bounds x="379" y="687" width="12" height="20"/>
+            <Bounds x="359" y="777" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_perform">
-            <Bounds x="319" y="845" width="12" height="20"/>
+            <Bounds x="299" y="935" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_review">
-            <Bounds x="254" y="950" width="12" height="20"/>
+            <Bounds x="234" y="1040" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_continue">
-            <Bounds x="379" y="887" width="12" height="20"/>
+            <Bounds x="359" y="977" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_delivered">
-            <Bounds x="182" y="1045" width="12" height="20"/>
+            <Bounds x="162" y="1135" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_concern">
-            <Bounds x="316" y="1045" width="12" height="20"/>
+            <Bounds x="296" y="1135" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_plan_user">
-            <Bounds x="694" y="605" width="12" height="20"/>
+            <Bounds x="674" y="695" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_plan_gap">
-            <Bounds x="474" y="650" width="12" height="20"/>
+            <Bounds x="454" y="740" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_plan_more">
-            <Bounds x="474" y="750" width="12" height="20"/>
+            <Bounds x="454" y="840" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_plan_bench">
-            <Bounds x="474" y="700" width="12" height="20"/>
+            <Bounds x="454" y="790" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_plan_pip">
-            <Bounds x="1014" y="650" width="12" height="20"/>
+            <Bounds x="994" y="740" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_approve">
-            <Bounds x="764" y="680" width="12" height="20"/>
+            <Bounds x="744" y="770" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_revise">
-            <Bounds x="724" y="757" width="12" height="20"/>
+            <Bounds x="704" y="847" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_approved">
-            <Bounds x="870" y="735" width="12" height="20"/>
+            <Bounds x="850" y="825" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_approve_again">
-            <Bounds x="944" y="650" width="12" height="20"/>
+            <Bounds x="924" y="740" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_perform_plan">
-            <Bounds x="744" y="825" width="12" height="20"/>
+            <Bounds x="724" y="915" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_progress">
-            <Bounds x="584" y="1005" width="12" height="20"/>
+            <Bounds x="564" y="1095" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_performed">
-            <Bounds x="889" y="1005" width="12" height="20"/>
+            <Bounds x="869" y="1095" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_eval">
-            <Bounds x="744" y="1095" width="12" height="20"/>
+            <Bounds x="724" y="1185" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_closed">
-            <Bounds x="764" y="1165" width="12" height="20"/>
+            <Bounds x="744" y="1255" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="xc_x_plan_pip">
-            <Bounds x="694" y="1255" width="12" height="20"/>
+            <Bounds x="674" y="1345" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_self">
-            <Bounds x="1144" y="645" width="12" height="20"/>
+            <Bounds x="1124" y="735" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_mgr">
-            <Bounds x="1243" y="645" width="12" height="20"/>
+            <Bounds x="1223" y="735" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_client">
-            <Bounds x="1340" y="645" width="12" height="20"/>
+            <Bounds x="1320" y="735" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_fin_all">
-            <Bounds x="1294" y="775" width="12" height="20"/>
+            <Bounds x="1274" y="865" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_fin_two">
-            <Bounds x="1169" y="775" width="12" height="20"/>
+            <Bounds x="1149" y="865" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_promoted">
-            <Bounds x="1162" y="995" width="12" height="20"/>
+            <Bounds x="1142" y="1085" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_promo">
-            <Bounds x="1162" y="900" width="12" height="20"/>
+            <Bounds x="1142" y="990" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_nochange">
-            <Bounds x="1312" y="900" width="12" height="20"/>
+            <Bounds x="1292" y="990" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_pip_work">
-            <Bounds x="316" y="1305" width="12" height="20"/>
+            <Bounds x="296" y="1395" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_pip_appr">
-            <Bounds x="1239" y="1305" width="12" height="20"/>
+            <Bounds x="1219" y="1395" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_pipapprove">
-            <Bounds x="384" y="1435" width="12" height="20"/>
+            <Bounds x="364" y="1525" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_notice">
-            <Bounds x="634" y="1435" width="12" height="20"/>
+            <Bounds x="614" y="1525" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_ack">
-            <Bounds x="884" y="1435" width="12" height="20"/>
+            <Bounds x="864" y="1525" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_pipactive">
-            <Bounds x="1134" y="1435" width="12" height="20"/>
+            <Bounds x="1114" y="1525" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_dispute">
-            <Bounds x="484" y="1465" width="12" height="20"/>
+            <Bounds x="464" y="1555" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_pip_revise">
-            <Bounds x="334" y="1465" width="12" height="20"/>
+            <Bounds x="314" y="1555" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_pipapprove_again">
-            <Bounds x="384" y="1456" width="12" height="20"/>
+            <Bounds x="364" y="1546" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_execute">
-            <Bounds x="1244" y="1525" width="12" height="20"/>
+            <Bounds x="1224" y="1615" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_checkin">
-            <Bounds x="464" y="1613" width="12" height="20"/>
+            <Bounds x="444" y="1703" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_fpr">
-            <Bounds x="784" y="1603" width="12" height="20"/>
+            <Bounds x="764" y="1693" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_fpr_again">
-            <Bounds x="944" y="1633" width="12" height="20"/>
+            <Bounds x="924" y="1723" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_ppassed">
-            <Bounds x="1044" y="1577" width="12" height="20"/>
+            <Bounds x="1024" y="1667" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_pnotmet">
-            <Bounds x="1044" y="1627" width="12" height="20"/>
+            <Bounds x="1024" y="1717" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="xc_x_execute">
-            <Bounds x="1374" y="1577" width="12" height="20"/>
+            <Bounds x="1354" y="1667" width="12" height="20"/>
         </CMMNShape>
         <CMMNShape cmmnElementRef="ec_s_stage3_a">
             <Bounds x="744" y="1762" width="12" height="20"/>
@@ -416,6 +422,9 @@
         </CMMNShape>
         <CMMNShape cmmnElementRef="xc_x_case">
             <Bounds x="1464" y="1855" width="12" height="20"/>
+        </CMMNShape>
+        <CMMNShape cmmnElementRef="crit__hP39k_0">
+            <Bounds x="584" y="1910" width="12" height="20"/>
         </CMMNShape>
         <CMMNEdge sourceCMMNElementRef="pi_collect_verify" targetCMMNElementRef="ec_s_create"/>
         <CMMNEdge sourceCMMNElementRef="pi_create_record" targetCMMNElementRef="ec_s_assign"/>
@@ -480,7 +489,7 @@
             <waypoint x="472" y="1155"/>
             <waypoint x="472" y="725"/>
         </CMMNEdge>
-        <CMMNEdge sourceCMMNElementRef="pi_bench" targetCMMNElementRef="ec_s_plan_bench"/>
+        <CMMNEdge sourceCMMNElementRef="pi_bench_review" targetCMMNElementRef="ec_s_plan_bench"/>
         <CMMNEdge sourceCMMNElementRef="pi_pip_passed" targetCMMNElementRef="ec_s_plan_pip">
             <waypoint x="1125" y="1518"/>
             <waypoint x="1395" y="1518"/>
@@ -599,6 +608,8 @@
         <CMMNEdge sourceCMMNElementRef="pi_final_records" targetCMMNElementRef="ec_s_completed"/>
         <CMMNEdge sourceCMMNElementRef="pi_stage3" targetCMMNElementRef="xc_x_case"/>
         <CMMNEdge sourceCMMNElementRef="pi_bench" targetCMMNElementRef="pi_bench_timer"/>
+        <CMMNEdge sourceCMMNElementRef="pi_bench" targetCMMNElementRef="ec_s_bench_review"/>
         <CMMNEdge sourceCMMNElementRef="pi_final_pip_review" targetCMMNElementRef="pi_pip_ext_timer"/>
+        <CMMNEdge sourceCMMNElementRef="pi_revoke_access" targetCMMNElementRef="crit__hP39k_0"/>
     </CMMNDiagram>
 </CMMNDI>

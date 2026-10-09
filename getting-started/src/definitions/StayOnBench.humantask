@@ -2,7 +2,7 @@
     <cafienne:implementation name="StayOnBench" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
         <input id="name__09a41" name="name" typeRef="string"/>
         <input id="role__23391" name="role" typeRef="string"/>
-        <output id="skillGap__87397" name="skillGap" typeRef="boolean"/>
+        <output id="benchNotes__b3n01" name="benchNotes" typeRef="string"/>
         <task-model>{
   "schema": {
     "title": "Stay on bench",
@@ -18,10 +18,9 @@
         "title": "Role",
         "readOnly": true
       },
-      "skillGap": {
-        "type": "boolean",
-        "title": "Skill gap identified",
-        "default": false
+      "benchNotes": {
+        "type": "string",
+        "title": "Bench update: what are you working on (learning, internal work, availability)?"
       }
     }
   },
@@ -29,8 +28,11 @@
     "ui:order": [
       "name",
       "role",
-      "skillGap"
-    ]
+      "benchNotes"
+    ],
+    "benchNotes": {
+      "ui:widget": "textarea"
+    }
   }
 }</task-model>
     </cafienne:implementation>

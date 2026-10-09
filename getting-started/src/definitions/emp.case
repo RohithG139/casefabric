@@ -325,7 +325,7 @@
                             </planItemOnPart>
                         </entryCriterion>
                         <inputs id="in_bench_Employee" name="Employee" bindingRef="Employee"/>
-                        <outputs id="out_bench_skillGap" name="ProjectAssignment.skillGap" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_bench_benchNotes" name="ProjectAssignment.benchNotes" bindingRef="ProjectAssignment"/>
                         <extensionElements mustUnderstand="false">
                             <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="StayOnBench.humantask">
                                 <parameterMapping id="pm_bench_in_name" sourceRef="in_bench_Employee" targetRef="name__09a41">
@@ -338,9 +338,46 @@
                                         <body><![CDATA[Employee?.role]]></body>
                                     </transformation>
                                 </parameterMapping>
-                                <parameterMapping id="pm_bench_out_skillGap" sourceRef="skillGap__87397" targetRef="out_bench_skillGap">
-                                    <transformation id="pm_bench_out_skillGap_t">
-                                        <body><![CDATA[{'skillGap':skillGap}]]></body>
+                                <parameterMapping id="pm_bench_out_benchNotes" sourceRef="benchNotes__b3n01" targetRef="out_bench_benchNotes">
+                                    <transformation id="pm_bench_out_benchNotes_t">
+                                        <body><![CDATA[{'benchNotes':benchNotes}]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                            </cafienne:implementation>
+                        </extensionElements>
+                    </humanTask>
+                    <humanTask id="pi_bench_review" name="Bench review" isBlocking="true" performerRef="cr__8b8pm_1">
+                        <documentation textFormat="text/plain">
+                            <text><![CDATA[Owner: Manager. Reviews the bench update and decides the skill gap.]]></text>
+                        </documentation>
+                        <entryCriterion id="ec_s_bench_review">
+                            <planItemOnPart id="op_s_bench_review" sourceRef="pi_bench">
+                                <standardEvent>complete</standardEvent>
+                            </planItemOnPart>
+                        </entryCriterion>
+                        <inputs id="in_bench_review_Employee" name="Employee" bindingRef="Employee"/>
+                        <inputs id="in_bench_review_ProjectAssignment" name="ProjectAssignment" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_bench_review_skillGap" name="ProjectAssignment.skillGap" bindingRef="ProjectAssignment"/>
+                        <extensionElements mustUnderstand="false">
+                            <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="BenchReview.humantask">
+                                <parameterMapping id="pm_bench_review_in_name" sourceRef="in_bench_review_Employee" targetRef="name__br001">
+                                    <transformation id="pm_bench_review_in_name_t">
+                                        <body><![CDATA[Employee?.name]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_bench_review_in_role" sourceRef="in_bench_review_Employee" targetRef="role__br002">
+                                    <transformation id="pm_bench_review_in_role_t">
+                                        <body><![CDATA[Employee?.role]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_bench_review_in_benchNotes" sourceRef="in_bench_review_ProjectAssignment" targetRef="benchNotes__br003">
+                                    <transformation id="pm_bench_review_in_benchNotes_t">
+                                        <body><![CDATA[ProjectAssignment?.benchNotes]]></body>
+                                    </transformation>
+                                </parameterMapping>
+                                <parameterMapping id="pm_bench_review_out_skillGap" sourceRef="skillGap__br004" targetRef="out_bench_review_skillGap">
+                                    <transformation id="pm_bench_review_out_skillGap_t">
+                                        <body><![CDATA[{'skillGap': skillGap == true}]]></body>
                                     </transformation>
                                 </parameterMapping>
                             </cafienne:implementation>
@@ -560,7 +597,7 @@
                         <entryCriterion id="ec_s_plan_gap">
                             <ifPart contextRef="ProjectAssignment">
                                 <condition>
-                                    <body><![CDATA[ProjectAssignment?.skillGap == true and case.file.DevelopmentPlan.value?.status != 'active' and case.file.PIP.value?.status != 'active']]></body>
+                                    <body><![CDATA[ProjectAssignment?.skillGap == true and case.file.DevelopmentPlan?.status != 'active' and case.file.PIP?.status != 'active']]></body>
                                 </condition>
                             </ifPart>
                             <planItemOnPart id="op_s_plan_gap" sourceRef="pi_project_review">
@@ -570,10 +607,10 @@
                         <entryCriterion id="ec_s_plan_bench">
                             <ifPart contextRef="ProjectAssignment">
                                 <condition>
-                                    <body><![CDATA[ProjectAssignment?.skillGap == true and case.file.DevelopmentPlan.value?.status != 'active' and case.file.PIP.value?.status != 'active']]></body>
+                                    <body><![CDATA[ProjectAssignment?.skillGap == true and case.file.DevelopmentPlan?.status != 'active' and case.file.PIP?.status != 'active']]></body>
                                 </condition>
                             </ifPart>
-                            <planItemOnPart id="op_s_plan_bench" sourceRef="pi_bench">
+                            <planItemOnPart id="op_s_plan_bench" sourceRef="pi_bench_review">
                                 <standardEvent>complete</standardEvent>
                             </planItemOnPart>
                         </entryCriterion>
@@ -771,7 +808,7 @@
                             <itemControl>
                                 <repetitionRule>
                                     <condition>
-                                        <body><![CDATA[case.file.DevelopmentPlan.value?.progress != 'done']]></body>
+                                        <body><![CDATA[case.file.DevelopmentPlan?.progress != 'done']]></body>
                                     </condition>
                                 </repetitionRule>
                             </itemControl>
@@ -1239,7 +1276,7 @@
                                 </parameterMapping>
                                 <parameterMapping id="pm_promotion_out_role" sourceRef="role__0b2e3" targetRef="out_promotion_role">
                                     <transformation id="pm_promotion_out_role_t">
-                                        <body><![CDATA[{'role': (newRole != null and newRole.trim() != '') ? newRole.trim() : case.file.Employee.value?.role}]]></body>
+                                        <body><![CDATA[{'role': (newRole != null and newRole.trim() != '') ? newRole.trim() : case.file.Employee?.role}]]></body>
                                     </transformation>
                                 </parameterMapping>
                             </cafienne:implementation>
@@ -1280,7 +1317,7 @@
                 <entryCriterion id="ec_s_pip_appr">
                     <ifPart contextRef="Appraisal">
                         <condition>
-                            <body><![CDATA[Appraisal?.outcome == 'poor' and case.file.PIP.value?.status != 'active']]></body>
+                            <body><![CDATA[Appraisal?.outcome == 'poor' and case.file.PIP?.status != 'active']]></body>
                         </condition>
                     </ifPart>
                     <planItemOnPart id="op_s_pip_appr" sourceRef="pi_finalize">
@@ -1844,6 +1881,11 @@
                         <standardEvent>complete</standardEvent>
                     </planItemOnPart>
                 </entryCriterion>
+                <exitCriterion id="crit__hP39k_0">
+                    <planItemOnPart id="_hP39k_497" sourceRef="pi_revoke_access">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </exitCriterion>
                 <inputs id="in_revoke_access_Employee" name="Employee" bindingRef="Employee"/>
                 <inputs id="in_revoke_access_Exit" name="Exit" bindingRef="Exit"/>
                 <parameterMapping id="pm_revoke_access_in_employeeId" sourceRef="in_revoke_access_Employee" targetRef="employeeId__48052">

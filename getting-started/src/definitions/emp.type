@@ -23,6 +23,7 @@
                 <property id="sp_ProjectAssignment_projectId" name="projectId" type="string" multiplicity="ExactlyOne"/>
                 <property id="sp_ProjectAssignment_onProject" name="onProject" type="boolean" multiplicity="ExactlyOne"/>
                 <property id="sp_ProjectAssignment_skillGap" name="skillGap" type="boolean" multiplicity="ExactlyOne"/>
+                <property id="sp_ProjectAssignment_benchNotes" name="benchNotes" type="string" multiplicity="ExactlyOne"/>
                 <property id="sp_ProjectAssignment_accepted" name="accepted" type="boolean" multiplicity="ExactlyOne"/>
                 <property id="sp_ProjectAssignment_reviewOutcome" name="reviewOutcome" type="string" multiplicity="ExactlyOne"/>
             </schema>
