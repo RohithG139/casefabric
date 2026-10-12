@@ -3128,6 +3128,7 @@
             </humanTask>
             <processTask id="issue_notice" name="Send PIP notice" isBlocking="true" processRef="SendPIPNotice.process">
                 <inputs id="in_issue_notice_PIP" name="PIP" bindingRef="PIP"/>
+                <inputs id="in_issue_notice_Employee" name="Employee" bindingRef="Employee"/>
                 <parameterMapping id="pm_issue_notice_in_employeeEmail" sourceRef="in_issue_notice_PIP" targetRef="employeeEmail__eed4b">
                     <transformation id="pm_issue_notice_in_employeeEmail_t">
                         <body><![CDATA[PIP?.employeeEmail]]></body>
@@ -3141,6 +3142,11 @@
                 <parameterMapping id="pm_issue_notice_in_goals" sourceRef="in_issue_notice_PIP" targetRef="goals__9bedf">
                     <transformation id="pm_issue_notice_in_goals_t">
                         <body><![CDATA[PIP?.goals]]></body>
+                    </transformation>
+                </parameterMapping>
+                <parameterMapping id="pm_issue_notice_in_employeeName" sourceRef="in_issue_notice_Employee" targetRef="employeeName__pn001">
+                    <transformation id="pm_issue_notice_in_employeeName_t">
+                        <body><![CDATA[Employee?.name]]></body>
                     </transformation>
                 </parameterMapping>
             </processTask>
@@ -3809,22 +3815,34 @@
         </extensionElements>
     </process>
     <process name="SendPIPNotice" implementationType="http://www.omg.org/spec/CMMN/ProcessType/Unspecified" id="SendPIPNotice.process">
-        <documentation textFormat="text/plain">
-            <text><![CDATA[Mail service: send the PIP notice]]></text>
-        </documentation>
-        <input id="employeeEmail__eed4b" name="employeeEmail" typeRef="string"/>
-        <input id="noticeText__d8013" name="noticeText" typeRef="string"/>
-        <input id="goals__9bedf" name="goals" typeRef="string"/>
-        <extensionElements mustUnderstand="false">
-            <cafienne:implementation class="org.cafienne.processtask.implementation.http.HTTPCallDefinition" async="true" xmlns:cafienne="org.cafienne">
-                <url xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">http://mock-api:8390/api/SendPIPNotice</url>
-                <method xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">POST</method>
-                <post-content xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">{"employeeEmail": "${employeeEmail}", "noticeText": "${noticeText}", "goals": "${goals}"}</post-content>
-                <http-headers xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">
-                    <http-header name="Content-Type">application/json</http-header>
-                </http-headers>
-            </cafienne:implementation>
-        </extensionElements>
+    <documentation textFormat="text/plain">
+        <text><![CDATA[Mail service: email the PIP notice to the employee (SMTP server configured in src/conf/local.conf, mail-service)]]></text>
+    </documentation>
+    <input id="employeeEmail__eed4b" name="employeeEmail" typeRef="string"/>
+    <input id="noticeText__d8013" name="noticeText" typeRef="string"/>
+    <input id="goals__9bedf" name="goals" typeRef="string"/>
+    <input id="employeeName__pn001" name="employeeName" typeRef="string"/>
+    <extensionElements mustUnderstand="false">
+        <cafienne:implementation class="org.cafienne.processtask.implementation.mail.MailDefinition" xmlns:cafienne="org.cafienne">
+            <subject>Performance Improvement Plan: action required</subject>
+            <from>hr@example.com</from>
+            <reply-to>hr@example.com</reply-to>
+            <to>
+                <address name="${employeeName}">${employeeEmail}</address>
+            </to>
+            <mail-body type="text/html"><![CDATA[<html>
+<body style="font-family: Arial, sans-serif; font-size: 14px; color: #1b2430;">
+  <p>Dear ${employeeName},</p>
+  <p>${noticeText}</p>
+  <p><b>Your improvement goals</b></p>
+  <p style="white-space: pre-line; border-left: 3px solid #1f5bb5; padding-left: 10px;">${goals}</p>
+  <p>Please open the task <b>Acknowledge PIP</b> in CaseFabric to confirm you have received this plan, or to dispute it.
+     Your manager will hold a check-in with you every 14 days during the plan.</p>
+  <p>Kind regards,<br/>HR Department</p>
+</body>
+</html>]]></mail-body>
+        </cafienne:implementation>
+    </extensionElements>
     </process>
     <process name="RevokeAccess" implementationType="http://www.omg.org/spec/CMMN/ProcessType/Unspecified" id="RevokeAccess.process">
         <documentation textFormat="text/plain">

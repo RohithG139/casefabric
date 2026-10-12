@@ -1536,6 +1536,7 @@
                             </repetitionRule>
                         </itemControl>
                         <inputs id="in_issue_notice_PIP" name="PIP" bindingRef="PIP"/>
+                        <inputs id="in_issue_notice_Employee" name="Employee" bindingRef="Employee"/>
                         <parameterMapping id="pm_issue_notice_in_employeeEmail" sourceRef="in_issue_notice_PIP" targetRef="employeeEmail__eed4b">
                             <transformation id="pm_issue_notice_in_employeeEmail_t">
                                 <body><![CDATA[PIP?.employeeEmail]]></body>
@@ -1549,6 +1550,11 @@
                         <parameterMapping id="pm_issue_notice_in_goals" sourceRef="in_issue_notice_PIP" targetRef="goals__9bedf">
                             <transformation id="pm_issue_notice_in_goals_t">
                                 <body><![CDATA[PIP?.goals]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_issue_notice_in_employeeName" sourceRef="in_issue_notice_Employee" targetRef="employeeName__pn001">
+                            <transformation id="pm_issue_notice_in_employeeName_t">
+                                <body><![CDATA[Employee?.name]]></body>
                             </transformation>
                         </parameterMapping>
                     </processTask>
