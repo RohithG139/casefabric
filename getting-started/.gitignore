@@ -85,3 +85,4 @@ hs_err_pid*
 
 run/
 documentation/UserContext.md
+.env
