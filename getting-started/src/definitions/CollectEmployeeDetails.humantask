@@ -3,12 +3,13 @@
         <output id="name__17a31" name="name" typeRef="string"/>
         <output id="email__54df4" name="email" typeRef="string"/>
         <output id="department__c6d5b" name="department" typeRef="string"/>
+        <output id="role__cv001" name="role" typeRef="string"/>
         <output id="startDate__800a3" name="startDate" typeRef="date"/>
         <task-model>{
   "schema": {
     "title": "Collect and verify employee details",
     "type": "object",
-    "required": ["name", "email", "department", "startDate"],
+    "required": ["name", "email", "department", "role", "startDate"],
     "properties": {
       "name": {
         "title": "Full name",
@@ -21,6 +22,10 @@
      
       "department": {
         "title": "Department",
+        "type": "string"
+      },
+      "role": {
+        "title": "Role",
         "type": "string"
       },
       "startDate": {

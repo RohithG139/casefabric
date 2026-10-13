@@ -1,7 +1,7 @@
 <humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
     <cafienne:implementation name="PerformProjectWork" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
         <input id="name__2e57f" name="name" typeRef="string"/>
-        <input id="projectId__b329a" name="projectId" typeRef="string"/>
+        <input id="projectName__b329a" name="projectName" typeRef="string"/>
         <task-model>{
   "schema": {
     "title": "Perform project work",
@@ -12,9 +12,9 @@
         "title": "Full name",
         "readOnly": true
       },
-      "projectId": {
+      "projectName": {
         "type": "string",
-        "title": "Project ID",
+        "title": "Project name",
         "readOnly": true
       }
     }
@@ -22,7 +22,7 @@
   "uiSchema": {
     "ui:order": [
       "name",
-      "projectId"
+      "projectName"
     ]
   }
 }</task-model>

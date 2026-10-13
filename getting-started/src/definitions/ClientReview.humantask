@@ -1,7 +1,7 @@
 <humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
     <cafienne:implementation name="ClientReview" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
         <input id="name__d4831" name="name" typeRef="string"/>
-        <input id="projectId__c45d9" name="projectId" typeRef="string"/>
+        <input id="projectName__c45d9" name="projectName" typeRef="string"/>
         <output id="clientScore__7c3ba" name="clientScore" typeRef="integer"/>
         <task-model>{
   "schema": {
@@ -13,9 +13,9 @@
         "title": "Full name",
         "readOnly": true
       },
-      "projectId": {
+      "projectName": {
         "type": "string",
-        "title": "Project ID",
+        "title": "Project name",
         "readOnly": true
       },
       "clientScore": {
@@ -32,7 +32,7 @@
   "uiSchema": {
     "ui:order": [
       "name",
-      "projectId",
+      "projectName",
       "clientScore"
     ]
   }

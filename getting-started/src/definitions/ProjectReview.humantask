@@ -1,7 +1,7 @@
 <humanTask xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:cafienne="org.cafienne">
     <cafienne:implementation name="ProjectReview" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
         <input id="name__a7c82" name="name" typeRef="string"/>
-        <input id="projectId__3bfaf" name="projectId" typeRef="string"/>
+        <input id="projectName__3bfaf" name="projectName" typeRef="string"/>
         <output id="reviewOutcome__0f9c2" name="reviewOutcome" typeRef="string"/>
         <output id="skillGap__f06f8" name="skillGap" typeRef="boolean"/>
         <task-model>{
@@ -14,9 +14,9 @@
         "title": "Full name",
         "readOnly": true
       },
-      "projectId": {
+      "projectName": {
         "type": "string",
-        "title": "Project ID",
+        "title": "Project name",
         "readOnly": true
       },
       "reviewOutcome": {
@@ -41,7 +41,7 @@
   "uiSchema": {
     "ui:order": [
       "name",
-      "projectId",
+      "projectName",
       "reviewOutcome",
       "skillGap"
     ],

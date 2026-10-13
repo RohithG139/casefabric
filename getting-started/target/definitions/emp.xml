@@ -14,7 +14,7 @@
     </caseFileItemDefinition>
     <caseFileItemDefinition name="ProjectAssignment" definitionType="http://www.omg.org/spec/CMMN/DefinitionType/Unspecified" id="emp_type_ProjectAssignment.object">
         <property name="projectAvailable" type="http://www.omg.org/spec/CMMN/PropertyType/boolean"/>
-        <property name="projectId" type="http://www.omg.org/spec/CMMN/PropertyType/string"/>
+        <property name="projectName" type="http://www.omg.org/spec/CMMN/PropertyType/string"/>
         <property name="onProject" type="http://www.omg.org/spec/CMMN/PropertyType/boolean"/>
         <property name="skillGap" type="http://www.omg.org/spec/CMMN/PropertyType/boolean"/>
         <property name="benchNotes" type="http://www.omg.org/spec/CMMN/PropertyType/string"/>
@@ -136,7 +136,7 @@
                     </documentation>
                     <entryCriterion id="ec_s_create" sentryRef="s_ec_s_create"/>
                 </planItem>
-                <planItem id="pi_assign_role" name="Assign role and manager" definitionRef="assign_role">
+                <planItem id="pi_assign_role" name="Assign manager" definitionRef="assign_role">
                     <documentation textFormat="text/plain">
                         <text><![CDATA[Owner: HR / Manager]]></text>
                     </documentation>
@@ -217,18 +217,20 @@
                 <outputs id="out_collect_verify_name" name="Employee.name" bindingRef="Employee"/>
                 <outputs id="out_collect_verify_email" name="Employee.email" bindingRef="Employee"/>
                 <outputs id="out_collect_verify_department" name="Employee.department" bindingRef="Employee"/>
+                <outputs id="out_collect_verify_role" name="Employee.role" bindingRef="Employee"/>
                 <outputs id="out_collect_verify_startDate" name="Employee.startDate" bindingRef="Employee"/>
                 <extensionElements mustUnderstand="false">
                     <cafienne:implementation name="CollectEmployeeDetails" xmlns:cafienne="org.cafienne" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition" humanTaskRef="CollectEmployeeDetails.humantask">
                         <output id="name__17a31" name="name" typeRef="string"/>
                         <output id="email__54df4" name="email" typeRef="string"/>
                         <output id="department__c6d5b" name="department" typeRef="string"/>
+                        <output id="role__cv001" name="role" typeRef="string"/>
                         <output id="startDate__800a3" name="startDate" typeRef="date"/>
                         <task-model>{
   "schema": {
     "title": "Collect and verify employee details",
     "type": "object",
-    "required": ["name", "email", "department", "startDate"],
+    "required": ["name", "email", "department", "role", "startDate"],
     "properties": {
       "name": {
         "title": "Full name",
@@ -241,6 +243,10 @@
      
       "department": {
         "title": "Department",
+        "type": "string"
+      },
+      "role": {
+        "title": "Role",
         "type": "string"
       },
       "startDate": {
@@ -265,6 +271,11 @@
                         <parameterMapping id="pm_collect_verify_out_department" sourceRef="department__c6d5b" targetRef="out_collect_verify_department">
                             <transformation id="pm_collect_verify_out_department_t">
                                 <body><![CDATA[{'department':department}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_collect_verify_out_role" sourceRef="role__cv001" targetRef="out_collect_verify_role">
+                            <transformation id="pm_collect_verify_out_role_t">
+                                <body><![CDATA[{'role':role}]]></body>
                             </transformation>
                         </parameterMapping>
                         <parameterMapping id="pm_collect_verify_out_startDate" sourceRef="startDate__800a3" targetRef="out_collect_verify_startDate">
@@ -304,20 +315,18 @@
                     </transformation>
                 </parameterMapping>
             </processTask>
-            <humanTask id="assign_role" name="Assign role and manager" isBlocking="true" performerRef="cr__8b8pm_2">
+            <humanTask id="assign_role" name="Assign manager" isBlocking="true" performerRef="cr__8b8pm_2">
                 <inputs id="_hP39k_444" name="Employee" bindingRef="Employee"/>
-                <outputs id="_hP39k_449" name="Employee" bindingRef="Employee"/>
                 <outputs id="_hP39k_450" name="Employee.1" bindingRef="Employee"/>
                 <extensionElements mustUnderstand="false">
                     <cafienne:implementation name="AssignRoleManager" xmlns:cafienne="org.cafienne" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition" humanTaskRef="AssignRoleManager.humantask">
                         <input id="name__44847" name="name" typeRef="string"/>
                         <input id="employeeId__7e0dc" name="employeeId" typeRef="string"/>
                         <input id="department__a6b37" name="department" typeRef="string"/>
-                        <output id="role__069b7" name="role" typeRef="string"/>
                         <output id="manager__19d01" name="manager" typeRef="string"/>
                         <task-model>{
   "schema": {
-    "title": "Assign role &amp; manager",
+    "title": "Assign manager",
     "type": "object",
     "properties": {
       "name": {
@@ -335,17 +344,12 @@
         "title": "Department",
         "readOnly": true
       },
-      "role": {
-        "type": "string",
-        "title": "Role"
-      },
       "manager": {
         "type": "string",
         "title": "Manager"
       }
     },
     "required": [
-      "role",
       "manager"
     ]
   },
@@ -354,7 +358,6 @@
       "name",
       "employeeId",
       "department",
-      "role",
       "manager"
     ]
   }
@@ -372,11 +375,6 @@
                         <parameterMapping id="_hP39k_246" sourceRef="_hP39k_444" targetRef="department__a6b37">
                             <transformation id="_hP39k_447">
                                 <body><![CDATA[Employee?.department]]></body>
-                            </transformation>
-                        </parameterMapping>
-                        <parameterMapping id="_hP39k_247" sourceRef="role__069b7" targetRef="_hP39k_449">
-                            <transformation id="_hP39k_448">
-                                <body><![CDATA[{'role':role}]]></body>
                             </transformation>
                         </parameterMapping>
                         <parameterMapping id="_hP39k_248" sourceRef="manager__19d01" targetRef="_hP39k_450">
@@ -949,13 +947,13 @@
             </humanTask>
             <humanTask id="assign_project" name="Assign project" isBlocking="true" performerRef="cr__8b8pm_1">
                 <inputs id="in_assign_project_Employee" name="Employee" bindingRef="Employee"/>
-                <outputs id="out_assign_project_projectId" name="ProjectAssignment.projectId" bindingRef="ProjectAssignment"/>
+                <outputs id="out_assign_project_projectName" name="ProjectAssignment.projectName" bindingRef="ProjectAssignment"/>
                 <outputs id="out_assign_project_accepted" name="ProjectAssignment.accepted" bindingRef="ProjectAssignment"/>
                 <extensionElements mustUnderstand="false">
                     <cafienne:implementation name="AssignProject" xmlns:cafienne="org.cafienne" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition" humanTaskRef="AssignProject.humantask">
                         <input id="name__0e573" name="name" typeRef="string"/>
                         <input id="role__4c6e9" name="role" typeRef="string"/>
-                        <output id="projectId__c6425" name="projectId" typeRef="string"/>
+                        <output id="projectName__c6425" name="projectName" typeRef="string"/>
                         <output id="accepted__f9f2c" name="accepted" typeRef="boolean"/>
                         <task-model>{
   "schema": {
@@ -972,9 +970,9 @@
         "title": "Role",
         "readOnly": true
       },
-      "projectId": {
+      "projectName": {
         "type": "string",
-        "title": "Project ID"
+        "title": "Project name"
       },
       "accepted": {
         "type": "boolean",
@@ -983,7 +981,7 @@
       }
     },
     "required": [
-      "projectId",
+      "projectName",
       "accepted"
     ]
   },
@@ -991,7 +989,7 @@
     "ui:order": [
       "name",
       "role",
-      "projectId",
+      "projectName",
       "accepted"
     ]
   }
@@ -1006,9 +1004,9 @@
                                 <body><![CDATA[Employee?.role]]></body>
                             </transformation>
                         </parameterMapping>
-                        <parameterMapping id="pm_assign_project_out_projectId" sourceRef="projectId__c6425" targetRef="out_assign_project_projectId">
-                            <transformation id="pm_assign_project_out_projectId_t">
-                                <body><![CDATA[{'projectId':projectId}]]></body>
+                        <parameterMapping id="pm_assign_project_out_projectName" sourceRef="projectName__c6425" targetRef="out_assign_project_projectName">
+                            <transformation id="pm_assign_project_out_projectName_t">
+                                <body><![CDATA[{'projectName':projectName}]]></body>
                             </transformation>
                         </parameterMapping>
                         <parameterMapping id="pm_assign_project_out_accepted" sourceRef="accepted__f9f2c" targetRef="out_assign_project_accepted">
@@ -1021,7 +1019,7 @@
             </humanTask>
             <timerEvent id="bench_timer" name="Recheck after a week">
                 <timerExpression>
-                    <body><![CDATA[P7D]]></body>
+                    <body><![CDATA[PT10M]]></body>
                 </timerExpression>
                 <planItemStartTrigger id="tr_bench_timer" sourceRef="pi_bench">
                     <standardEvent>start</standardEvent>
@@ -1033,7 +1031,7 @@
                 <extensionElements mustUnderstand="false">
                     <cafienne:implementation name="PerformProjectWork" xmlns:cafienne="org.cafienne" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition" humanTaskRef="PerformProjectWork.humantask">
                         <input id="name__2e57f" name="name" typeRef="string"/>
-                        <input id="projectId__b329a" name="projectId" typeRef="string"/>
+                        <input id="projectName__b329a" name="projectName" typeRef="string"/>
                         <task-model>{
   "schema": {
     "title": "Perform project work",
@@ -1044,9 +1042,9 @@
         "title": "Full name",
         "readOnly": true
       },
-      "projectId": {
+      "projectName": {
         "type": "string",
-        "title": "Project ID",
+        "title": "Project name",
         "readOnly": true
       }
     }
@@ -1054,7 +1052,7 @@
   "uiSchema": {
     "ui:order": [
       "name",
-      "projectId"
+      "projectName"
     ]
   }
 }</task-model>
@@ -1063,9 +1061,9 @@
                                 <body><![CDATA[Employee?.name]]></body>
                             </transformation>
                         </parameterMapping>
-                        <parameterMapping id="pm_perform_work_in_projectId" sourceRef="in_perform_work_ProjectAssignment" targetRef="projectId__b329a">
-                            <transformation id="pm_perform_work_in_projectId_t">
-                                <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                        <parameterMapping id="pm_perform_work_in_projectName" sourceRef="in_perform_work_ProjectAssignment" targetRef="projectName__b329a">
+                            <transformation id="pm_perform_work_in_projectName_t">
+                                <body><![CDATA[ProjectAssignment?.projectName]]></body>
                             </transformation>
                         </parameterMapping>
                     </cafienne:implementation>
@@ -1079,7 +1077,7 @@
                 <extensionElements mustUnderstand="false">
                     <cafienne:implementation name="ProjectReview" xmlns:cafienne="org.cafienne" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition" humanTaskRef="ProjectReview.humantask">
                         <input id="name__a7c82" name="name" typeRef="string"/>
-                        <input id="projectId__3bfaf" name="projectId" typeRef="string"/>
+                        <input id="projectName__3bfaf" name="projectName" typeRef="string"/>
                         <output id="reviewOutcome__0f9c2" name="reviewOutcome" typeRef="string"/>
                         <output id="skillGap__f06f8" name="skillGap" typeRef="boolean"/>
                         <task-model>{
@@ -1092,9 +1090,9 @@
         "title": "Full name",
         "readOnly": true
       },
-      "projectId": {
+      "projectName": {
         "type": "string",
-        "title": "Project ID",
+        "title": "Project name",
         "readOnly": true
       },
       "reviewOutcome": {
@@ -1119,7 +1117,7 @@
   "uiSchema": {
     "ui:order": [
       "name",
-      "projectId",
+      "projectName",
       "reviewOutcome",
       "skillGap"
     ],
@@ -1133,9 +1131,9 @@
                                 <body><![CDATA[Employee?.name]]></body>
                             </transformation>
                         </parameterMapping>
-                        <parameterMapping id="pm_project_review_in_projectId" sourceRef="in_project_review_ProjectAssignment" targetRef="projectId__3bfaf">
-                            <transformation id="pm_project_review_in_projectId_t">
-                                <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                        <parameterMapping id="pm_project_review_in_projectName" sourceRef="in_project_review_ProjectAssignment" targetRef="projectName__3bfaf">
+                            <transformation id="pm_project_review_in_projectName_t">
+                                <body><![CDATA[ProjectAssignment?.projectName]]></body>
                             </transformation>
                         </parameterMapping>
                         <parameterMapping id="pm_project_review_out_reviewOutcome" sourceRef="reviewOutcome__0f9c2" targetRef="out_project_review_reviewOutcome">
@@ -2397,7 +2395,7 @@
                 <extensionElements mustUnderstand="false">
                     <cafienne:implementation name="ClientReview" xmlns:cafienne="org.cafienne" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition" humanTaskRef="ClientReview.humantask">
                         <input id="name__d4831" name="name" typeRef="string"/>
-                        <input id="projectId__c45d9" name="projectId" typeRef="string"/>
+                        <input id="projectName__c45d9" name="projectName" typeRef="string"/>
                         <output id="clientScore__7c3ba" name="clientScore" typeRef="integer"/>
                         <task-model>{
   "schema": {
@@ -2409,9 +2407,9 @@
         "title": "Full name",
         "readOnly": true
       },
-      "projectId": {
+      "projectName": {
         "type": "string",
-        "title": "Project ID",
+        "title": "Project name",
         "readOnly": true
       },
       "clientScore": {
@@ -2428,7 +2426,7 @@
   "uiSchema": {
     "ui:order": [
       "name",
-      "projectId",
+      "projectName",
       "clientScore"
     ]
   }
@@ -2438,9 +2436,9 @@
                                 <body><![CDATA[Employee?.name]]></body>
                             </transformation>
                         </parameterMapping>
-                        <parameterMapping id="pm_client_review_in_projectId" sourceRef="in_client_review_ProjectAssignment" targetRef="projectId__c45d9">
-                            <transformation id="pm_client_review_in_projectId_t">
-                                <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                        <parameterMapping id="pm_client_review_in_projectName" sourceRef="in_client_review_ProjectAssignment" targetRef="projectName__c45d9">
+                            <transformation id="pm_client_review_in_projectName_t">
+                                <body><![CDATA[ProjectAssignment?.projectName]]></body>
                             </transformation>
                         </parameterMapping>
                         <parameterMapping id="pm_client_review_out_clientScore" sourceRef="clientScore__7c3ba" targetRef="out_client_review_clientScore">
@@ -3815,34 +3813,23 @@
         </extensionElements>
     </process>
     <process name="SendPIPNotice" implementationType="http://www.omg.org/spec/CMMN/ProcessType/Unspecified" id="SendPIPNotice.process">
-    <documentation textFormat="text/plain">
-        <text><![CDATA[Mail service: email the PIP notice to the employee (SMTP server configured in src/conf/local.conf, mail-service)]]></text>
-    </documentation>
-    <input id="employeeEmail__eed4b" name="employeeEmail" typeRef="string"/>
-    <input id="noticeText__d8013" name="noticeText" typeRef="string"/>
-    <input id="goals__9bedf" name="goals" typeRef="string"/>
-    <input id="employeeName__pn001" name="employeeName" typeRef="string"/>
-    <extensionElements mustUnderstand="false">
-        <cafienne:implementation class="org.cafienne.processtask.implementation.mail.MailDefinition" xmlns:cafienne="org.cafienne">
-            <subject>Performance Improvement Plan: action required</subject>
-            <from>hr@example.com</from>
-            <reply-to>hr@example.com</reply-to>
-            <to>
-                <address name="${employeeName}">${employeeEmail}</address>
-            </to>
-            <mail-body type="text/html"><![CDATA[<html>
-<body style="font-family: Arial, sans-serif; font-size: 14px; color: #1b2430;">
-  <p>Dear ${employeeName},</p>
-  <p>${noticeText}</p>
-  <p><b>Your improvement goals</b></p>
-  <p style="white-space: pre-line; border-left: 3px solid #1f5bb5; padding-left: 10px;">${goals}</p>
-  <p>Please open the task <b>Acknowledge PIP</b> in CaseFabric to confirm you have received this plan, or to dispute it.
-     Your manager will hold a check-in with you every 14 days during the plan.</p>
-  <p>Kind regards,<br/>HR Department</p>
-</body>
-</html>]]></mail-body>
-        </cafienne:implementation>
-    </extensionElements>
+        <documentation textFormat="text/plain">
+            <text><![CDATA[Mail service: send the PIP notice]]></text>
+        </documentation>
+        <input id="employeeEmail__eed4b" name="employeeEmail" typeRef="string"/>
+        <input id="noticeText__d8013" name="noticeText" typeRef="string"/>
+        <input id="goals__9bedf" name="goals" typeRef="string"/>
+        <input id="employeeName__pn001" name="employeeName" typeRef="string"/>
+        <extensionElements mustUnderstand="false">
+            <cafienne:implementation class="org.cafienne.processtask.implementation.http.HTTPCallDefinition" async="true" xmlns:cafienne="org.cafienne">
+                <url xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">http://mock-api:8390/api/SendPIPNotice</url>
+                <method xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">POST</method>
+                <post-content xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">{"employeeEmail": "${employeeEmail}", "employeeName": "${employeeName}", "noticeText": "${noticeText}", "goals": "${goals}"}</post-content>
+                <http-headers xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL">
+                    <http-header name="Content-Type">application/json</http-header>
+                </http-headers>
+            </cafienne:implementation>
+        </extensionElements>
     </process>
     <process name="RevokeAccess" implementationType="http://www.omg.org/spec/CMMN/ProcessType/Unspecified" id="RevokeAccess.process">
         <documentation textFormat="text/plain">
@@ -3897,7 +3884,7 @@
             <CMMNShape name="Create employee record" cmmnElementRef="pi_create_record">
                 <Bounds x="330" y="255" width="200" height="60"/>
             </CMMNShape>
-            <CMMNShape name="Assign role and manager" cmmnElementRef="pi_assign_role">
+            <CMMNShape name="Assign manager" cmmnElementRef="pi_assign_role">
                 <Bounds x="570" y="255" width="200" height="60"/>
             </CMMNShape>
             <CMMNShape name="Complete onboarding process" cmmnElementRef="pi_complete_onb">
