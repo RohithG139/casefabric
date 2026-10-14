@@ -2,7 +2,7 @@
     <cafienne:implementation name="AssignProject" class="org.cafienne.cmmn.definition.task.WorkflowTaskDefinition">
         <input id="name__0e573" name="name" typeRef="string"/>
         <input id="role__4c6e9" name="role" typeRef="string"/>
-        <output id="projectId__c6425" name="projectId" typeRef="string"/>
+        <output id="projectName__c6425" name="projectName" typeRef="string"/>
         <output id="accepted__f9f2c" name="accepted" typeRef="boolean"/>
         <task-model>{
   "schema": {
@@ -19,9 +19,9 @@
         "title": "Role",
         "readOnly": true
       },
-      "projectId": {
+      "projectName": {
         "type": "string",
-        "title": "Project ID"
+        "title": "Project name"
       },
       "accepted": {
         "type": "boolean",
@@ -30,7 +30,7 @@
       }
     },
     "required": [
-      "projectId",
+      "projectName",
       "accepted"
     ]
   },
@@ -38,7 +38,7 @@
     "ui:order": [
       "name",
       "role",
-      "projectId",
+      "projectName",
       "accepted"
     ]
   }

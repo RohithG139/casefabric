@@ -15,7 +15,7 @@
         <CMMNShape name="Create employee record" cmmnElementRef="pi_create_record">
             <Bounds x="330" y="255" width="200" height="60"/>
         </CMMNShape>
-        <CMMNShape name="Assign role and manager" cmmnElementRef="pi_assign_role">
+        <CMMNShape name="Assign manager" cmmnElementRef="pi_assign_role">
             <Bounds x="570" y="255" width="200" height="60"/>
         </CMMNShape>
         <CMMNShape name="Complete onboarding process" cmmnElementRef="pi_complete_onb">

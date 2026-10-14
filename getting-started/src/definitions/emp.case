@@ -22,6 +22,7 @@
                 <outputs id="out_collect_verify_name" name="Employee.name" bindingRef="Employee"/>
                 <outputs id="out_collect_verify_email" name="Employee.email" bindingRef="Employee"/>
                 <outputs id="out_collect_verify_department" name="Employee.department" bindingRef="Employee"/>
+                <outputs id="out_collect_verify_role" name="Employee.role" bindingRef="Employee"/>
                 <outputs id="out_collect_verify_startDate" name="Employee.startDate" bindingRef="Employee"/>
                 <extensionElements mustUnderstand="false">
                     <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="CollectEmployeeDetails.humantask">
@@ -38,6 +39,11 @@
                         <parameterMapping id="pm_collect_verify_out_department" sourceRef="department__c6d5b" targetRef="out_collect_verify_department">
                             <transformation id="pm_collect_verify_out_department_t">
                                 <body><![CDATA[{'department':department}]]></body>
+                            </transformation>
+                        </parameterMapping>
+                        <parameterMapping id="pm_collect_verify_out_role" sourceRef="role__cv001" targetRef="out_collect_verify_role">
+                            <transformation id="pm_collect_verify_out_role_t">
+                                <body><![CDATA[{'role':role}]]></body>
                             </transformation>
                         </parameterMapping>
                         <parameterMapping id="pm_collect_verify_out_startDate" sourceRef="startDate__800a3" targetRef="out_collect_verify_startDate">
@@ -85,7 +91,7 @@
                     </transformation>
                 </parameterMapping>
             </processTask>
-            <humanTask id="pi_assign_role" name="Assign role and manager" isBlocking="true" performerRef="cr__8b8pm_2">
+            <humanTask id="pi_assign_role" name="Assign manager" isBlocking="true" performerRef="cr__8b8pm_2">
                 <documentation textFormat="text/plain">
                     <text><![CDATA[Owner: HR / Manager]]></text>
                 </documentation>
@@ -95,7 +101,6 @@
                     </planItemOnPart>
                 </entryCriterion>
                 <inputs id="_hP39k_444" name="Employee" bindingRef="Employee"/>
-                <outputs id="_hP39k_449" name="Employee" bindingRef="Employee"/>
                 <outputs id="_hP39k_450" name="Employee.1" bindingRef="Employee"/>
                 <extensionElements mustUnderstand="false">
                     <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="AssignRoleManager.humantask">
@@ -112,11 +117,6 @@
                         <parameterMapping id="_hP39k_246" sourceRef="_hP39k_444" targetRef="department__a6b37">
                             <transformation id="_hP39k_447">
                                 <body><![CDATA[Employee?.department]]></body>
-                            </transformation>
-                        </parameterMapping>
-                        <parameterMapping id="_hP39k_247" sourceRef="role__069b7" targetRef="_hP39k_449">
-                            <transformation id="_hP39k_448">
-                                <body><![CDATA[{'role':role}]]></body>
                             </transformation>
                         </parameterMapping>
                         <parameterMapping id="_hP39k_248" sourceRef="manager__19d01" targetRef="_hP39k_450">
@@ -415,7 +415,7 @@
                             </repetitionRule>
                         </itemControl>
                         <inputs id="in_assign_project_Employee" name="Employee" bindingRef="Employee"/>
-                        <outputs id="out_assign_project_projectId" name="ProjectAssignment.projectId" bindingRef="ProjectAssignment"/>
+                        <outputs id="out_assign_project_projectName" name="ProjectAssignment.projectName" bindingRef="ProjectAssignment"/>
                         <outputs id="out_assign_project_accepted" name="ProjectAssignment.accepted" bindingRef="ProjectAssignment"/>
                         <extensionElements mustUnderstand="false">
                             <cafienne:implementation xmlns:cafienne="org.cafienne" humanTaskRef="AssignProject.humantask">
@@ -429,9 +429,9 @@
                                         <body><![CDATA[Employee?.role]]></body>
                                     </transformation>
                                 </parameterMapping>
-                                <parameterMapping id="pm_assign_project_out_projectId" sourceRef="projectId__c6425" targetRef="out_assign_project_projectId">
-                                    <transformation id="pm_assign_project_out_projectId_t">
-                                        <body><![CDATA[{'projectId':projectId}]]></body>
+                                <parameterMapping id="pm_assign_project_out_projectName" sourceRef="projectName__c6425" targetRef="out_assign_project_projectName">
+                                    <transformation id="pm_assign_project_out_projectName_t">
+                                        <body><![CDATA[{'projectName':projectName}]]></body>
                                     </transformation>
                                 </parameterMapping>
                                 <parameterMapping id="pm_assign_project_out_accepted" sourceRef="accepted__f9f2c" targetRef="out_assign_project_accepted">
@@ -442,9 +442,9 @@
                             </cafienne:implementation>
                         </extensionElements>
                     </humanTask>
-                    <timerEvent id="pi_bench_timer" name="Recheck after a week">
+                    <timerEvent id="pi_bench_timer" name="Recheck after 10 mins">
                         <timerExpression>
-                            <body><![CDATA[P7D]]></body>
+                            <body><![CDATA[PT10M]]></body>
                         </timerExpression>
                         <planItemStartTrigger id="tr_bench_timer" sourceRef="pi_bench">
                             <standardEvent>start</standardEvent>
@@ -490,9 +490,9 @@
                                         <body><![CDATA[Employee?.name]]></body>
                                     </transformation>
                                 </parameterMapping>
-                                <parameterMapping id="pm_perform_work_in_projectId" sourceRef="in_perform_work_ProjectAssignment" targetRef="projectId__b329a">
-                                    <transformation id="pm_perform_work_in_projectId_t">
-                                        <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                                <parameterMapping id="pm_perform_work_in_projectName" sourceRef="in_perform_work_ProjectAssignment" targetRef="projectName__b329a">
+                                    <transformation id="pm_perform_work_in_projectName_t">
+                                        <body><![CDATA[ProjectAssignment?.projectName]]></body>
                                     </transformation>
                                 </parameterMapping>
                             </cafienne:implementation>
@@ -525,9 +525,9 @@
                                         <body><![CDATA[Employee?.name]]></body>
                                     </transformation>
                                 </parameterMapping>
-                                <parameterMapping id="pm_project_review_in_projectId" sourceRef="in_project_review_ProjectAssignment" targetRef="projectId__3bfaf">
-                                    <transformation id="pm_project_review_in_projectId_t">
-                                        <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                                <parameterMapping id="pm_project_review_in_projectName" sourceRef="in_project_review_ProjectAssignment" targetRef="projectName__3bfaf">
+                                    <transformation id="pm_project_review_in_projectName_t">
+                                        <body><![CDATA[ProjectAssignment?.projectName]]></body>
                                     </transformation>
                                 </parameterMapping>
                                 <parameterMapping id="pm_project_review_out_reviewOutcome" sourceRef="reviewOutcome__0f9c2" targetRef="out_project_review_reviewOutcome">
@@ -1153,9 +1153,9 @@
                                         <body><![CDATA[Employee?.name]]></body>
                                     </transformation>
                                 </parameterMapping>
-                                <parameterMapping id="pm_client_review_in_projectId" sourceRef="in_client_review_ProjectAssignment" targetRef="projectId__c45d9">
-                                    <transformation id="pm_client_review_in_projectId_t">
-                                        <body><![CDATA[ProjectAssignment?.projectId]]></body>
+                                <parameterMapping id="pm_client_review_in_projectName" sourceRef="in_client_review_ProjectAssignment" targetRef="projectName__c45d9">
+                                    <transformation id="pm_client_review_in_projectName_t">
+                                        <body><![CDATA[ProjectAssignment?.projectName]]></body>
                                     </transformation>
                                 </parameterMapping>
                                 <parameterMapping id="pm_client_review_out_clientScore" sourceRef="clientScore__7c3ba" targetRef="out_client_review_clientScore">
